@@ -95,6 +95,27 @@ nav {
     margin: 0 auto;
 }
 
+.hero-logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.hero-logo {
+    height: 200px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.4));
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
 .badge {
     display: inline-block;
     padding: 0.5rem 1.5rem;
@@ -426,4 +447,5 @@ footer {
     .countdown-value { font-size: 2rem; }
     .edition-card.featured { transform: scale(1); }
     .logo-img { height: 36px; }
+    .hero-logo { height: 140px; }
 }
