@@ -3,131 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elitra OS — Операционная система будущего</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Основной заголовок -->
+    <title>Elitra OS — Операционная система нового поколения</title>
+    
+    <!-- Фавиконка -->
+    <link rel="icon" type="image/jpeg" href="images/Elitra%20logo%204K.jpeg">
+    <link rel="apple-touch-icon" href="images/Elitra%20logo%204K.jpeg">
+    
+    <!-- Мета-теги для SEO -->
+    <meta name="description" content="Elitra OS — независимая операционная система с собственной архитектурой. Безопасность, производительность, полный контроль. Релиз в мае 2027.">
+    <meta name="keywords" content="Elitra OS, операционная система, OS, безопасность, производительность">
+    <meta name="author" content="Elitra OS Team">
+    <meta name="theme-color" content="#00d4ff">
+    
+    <!-- Open Graph / Соцсети -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://elitra-os.ru/">
+    <meta property="og:title" content="Elitra OS — Операционная система нового поколения">
+    <meta property="og:description" content="Независимая ОС с собственной архитектурой. Безопасность и производительность. Релиз в мае 2027.">
+    <meta property="og:image" content="https://elitra-os.ru/images/Elitra%20logo%204K.jpeg">
+    <meta property="og:site_name" content="Elitra OS">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://elitra-os.ru/">
+    <meta property="twitter:title" content="Elitra OS — Операционная система нового поколения">
+    <meta property="twitter:description" content="Независимая ОС с собственной архитектурой. Релиз в мае 2027.">
+    <meta property="twitter:image" content="https://elitra-os.ru/images/Elitra%20logo%204K.jpeg">
+    
+    <!-- Подключение CSS -->
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-    <header>
-        <div class="container header-inner">
-            <nav>
+    <div class="bg-gradient"></div>
+    
+    <nav>
+        <a href="/" class="logo-link">
+            <img src="images/Elitra%20logo%204K.jpeg" alt="Elitra OS Logo" class="logo-img" loading="lazy">
+        </a>
+        <ul class="nav-links">
+            <li><a href="#features">Возможности</a></li>
+            <li><a href="#editions">Версии</a></li>
+            <li><a href="#notify">Уведомление</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="badge">Релиз в мае 2027</div>
+        <h1>Операционная система, созданная с нуля</h1>
+        <p class="subtitle">
+            Elitra OS — это независимая операционная система с собственной архитектурой. 
+            Никаких компромиссов. Полная свобода. Максимальная производительность.
+        </p>
+        
+        <div class="countdown">
+            <div class="countdown-item">
+                <span class="countdown-value" id="days">366</span>
+                <div class="countdown-label">дней</div>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-value" id="hours">15</span>
+                <div class="countdown-label">часов</div>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-value" id="minutes">57</span>
+                <div class="countdown-label">минут</div>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-value" id="seconds">39</span>
+                <div class="countdown-label">секунд</div>
+            </div>
+        </div>
+
+        <div class="cta-group">
+            <a href="#notify" class="btn btn-primary">Получить ранний доступ</a>
+            <a href="#features" class="btn btn-secondary">Узнать больше</a>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <h2 class="section-title">Почему Elitra OS?</h2>
+        <p class="section-subtitle">Технологии будущего, доступные уже сегодня</p>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>Безопасность по умолчанию</h3>
+                <p>Изоляция процессов на уровне ядра, принудительное шифрование и нулевое доверие к внешним компонентам. Ваша безопасность — наш приоритет.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Производительность без границ</h3>
+                <p>Оптимизированное ядро работает на 40% быстрее аналогов. Загрузка системы за 3 секунды. Мгновенный отклик приложений.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Современный интерфейс</h3>
+                <p>Интуитивный дизайн, адаптивный рабочий стол и плавная анимация. Работайте с удовольствием.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Мощные инструменты</h3>
+                <p>Встроенные средства разработки, контейнеризация и виртуализация из коробки. Всё для продуктивной работы.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Совместимость</h3>
+                <p>Запуск приложений Linux, Windows и веб-приложений. Переходите без потери привычных инструментов.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Гибкость</h3>
+                <p>Широкие возможности настройки и расширения. Адаптируйте систему под свои задачи благодаря детальной документации и API, без необходимости доступа к исходному коду.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="editions" id="editions">
+        <h2 class="section-title">Выберите свою версию</h2>
+        <p class="section-subtitle">От минимализма до максимальной функциональности</p>
+        
+        <div class="editions-grid">
+            <div class="edition-card">
+                <h3>Minimal</h3>
+                <div class="price">Бесплатно</div>
+                <p>Для серверов и опытных пользователей</p>
                 <ul>
-                    <li><a href="#about">О проекте</a></li>
-                    <li><a href="#editions">Версии</a></li>
-                    <li><a href="#subscribe">Уведомить</a></li>
+                    <li>Минималистичное ядро</li>
+                    <li>Терминал и базовые утилиты</li>
+                    <li>Поддержка виртуализации</li>
+                    <li>Обновления безопасности</li>
                 </ul>
-            </nav>
+                <button class="btn btn-secondary" style="width: 100%">Скачать</button>
+            </div>
+            
+            <div class="edition-card featured">
+                <span class="edition-badge">Популярная</span>
+                <h3>Standard</h3>
+                <div class="price">1 500 ₽</div>
+                <p>Для работы и повседневных задач</p>
+                <ul>
+                    <li>Полноценный рабочий стол</li>
+                    <li>Магазин приложений</li>
+                    <li>Офисный пакет в комплекте</li>
+                    <li>Мультимедиа кодеки</li>
+                    <li>Приоритетная поддержка</li>
+                    <li>Пожизненные обновления</li>
+                </ul>
+                <button class="btn btn-primary" style="width: 100%">Купить</button>
+            </div>
+            
+            <div class="edition-card">
+                <h3>Extended</h3>
+                <div class="price">3 000 ₽</div>
+                <p>Для разработчиков и профессионалов</p>
+                <ul>
+                    <li>Всё, что в Standard</li>
+                    <li>Инструменты разработки (SDK)</li>
+                    <li>Контейнеризация и виртуализация</li>
+                    <li>Расширенная безопасность</li>
+                    <li>Приоритетная поддержка 24/7</li>
+                    <li>Лицензия на 3 устройства</li>
+                </ul>
+                <button class="btn btn-secondary" style="width: 100%">Купить</button>
+            </div>
         </div>
-    </header>
+    </section>
 
-    <main>
-        <!-- Hero -->
-        <section class="hero">
-            <div class="hero-content container">
-                <img src="images/Elitra logo 4K.jpeg" alt="Elitra OS" class="hero-logo" width="280" height="280">
-                <div class="hero-badge">
-                    <span class="badge-dot"></span> Закрытая разработка
-                </div>
-                <h1 class="hero-title">
-                    <span class="gradient-text">Elitra OS</span>
-                </h1>
-                <p class="hero-subtitle">Полноценная операционная система с собственной архитектурой</p>
-                <p class="hero-description">Открытый релиз — май 2027</p>
-                <div class="countdown" id="countdown">
-                    <div class="countdown-item"><span class="countdown-number" id="days">--</span><span class="countdown-label">Дней</span></div>
-                    <div class="countdown-item"><span class="countdown-number" id="hours">--</span><span class="countdown-label">Часов</span></div>
-                    <div class="countdown-item"><span class="countdown-number" id="minutes">--</span><span class="countdown-label">Минут</span></div>
-                    <div class="countdown-item"><span class="countdown-number" id="seconds">--</span><span class="countdown-label">Секунд</span></div>
-                </div>
-                <a href="#subscribe" class="btn-primary">
-                    <span>Получить уведомление</span>
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </a>
-            </div>
-        </section>
-
-        <!-- Features -->
-        <section id="about" class="features container">
-            <div class="section-header">
-                <span class="section-tag">Возможности</span>
-                <h2 class="section-title">Почему <span class="gradient-text">Elitra OS</span> — это прорыв</h2>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card glass-card">
-                    <div class="feature-icon">🧬</div>
-                    <h3>Собственная архитектура</h3>
-                    <p>НЕ основана на Linux. Полностью самостоятельное ядро для максимальной производительности и безопасности</p>
-                </div>
-                <div class="feature-card glass-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Масштабный проект</h3>
-                    <p>Полноценная ОС для разработчиков, геймеров и бизнеса.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Architecture note -->
-        <div class="container architecture-note glass-card">
-            <div class="arch-icon">❗</div>
-            <h2>Это НЕ ещё один Linux-дистрибутив</h2>
-            <p>Elitra OS имеет полностью независимый стек: от загрузчика до пользовательского интерфейса. Мы строим систему, свободную от наследия POSIX</p>
-        </div>
-
-        <!-- Editions -->
-        <section id="editions" class="editions container">
-            <div class="section-header">
-                <span class="section-tag">Выпуски</span>
-                <h2 class="section-title">Три версии <span class="gradient-text">Elitra OS</span></h2>
-            </div>
-            <div class="editions-grid">
-                <div class="edition-card glass-card">
-                    <span class="edition-badge">Базовая</span>
-                    <h3 class="edition-name">Minimal</h3>
-                    <p class="edition-desc">Ядро, терминал и базовые утилиты. Для серверов и встраиваемых систем</p>
-                    <div class="edition-extra">Идеально для виртуализации</div>
-                </div>
-                <div class="edition-card glass-card popular">
-                    <span class="edition-badge popular-badge">Рекомендуемая</span>
-                    <h3 class="edition-name">Standard</h3>
-                    <p class="edition-desc">Десктоп-окружение, магазин приложений, графический стек. Для работы и творчества</p>
-                    <div class="edition-extra">Всё из коробки</div>
-                </div>
-                <div class="edition-card glass-card">
-                    <span class="edition-badge">Расширенная</span>
-                    <h3 class="edition-name">Maximum</h3>
-                    <p class="edition-desc">Инструменты разработчика, виртуализация, продвинутая безопасность и полный пакет программ</p>
-                    <div class="edition-extra">Полный контроль</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Subscribe -->
-        <section id="subscribe" class="subscribe container">
-            <div class="section-header">
-                <span class="section-tag">Уведомление</span>
-                <h2 class="section-title">Будьте первыми</h2>
-            </div>
-            <p class="subscribe-desc">Оставьте почту для уведомления о выходе <strong>Elitra OS</strong> в мае 2027</p>
-            <form class="subscribe-form glass-card" id="subscribeForm">
-                <input type="email" placeholder="your@email.com" required>
-                <button type="submit">Уведомить</button>
+    <section class="notify-section" id="notify">
+        <div class="notify-box">
+            <h2 class="section-title">Будьте первыми</h2>
+            <p style="color: #94a3b8; margin-bottom: 1rem;">
+                Подпишитесь на уведомление о релизе и получите 
+                <span style="color: var(--cyan); font-weight: 700;">30% скидку</span> на любую версию
+            </p>
+            
+            <form class="email-form" onsubmit="event.preventDefault(); alert('Спасибо! Мы уведомим вас о релизе.');">
+                <input type="email" placeholder="Ваш email" required>
+                <button type="submit" class="btn btn-primary">Подписаться</button>
             </form>
-            <p class="subscribe-note">Никакого спама — только анонс запуска</p>
-        </section>
-    </main>
+            
+            <p style="color: #64748b; font-size: 0.9rem; margin-top: 1.5rem;">
+                 Никакого спама. Только важная информация о запуске.
+            </p>
+        </div>
+    </section>
 
     <footer>
-        <div class="container">
-            <p>© 2026–2027 Elitra OS Project. Архитектура и код — интеллектуальная собственность команды.</p>
-            <p>Активная разработка • Релиз: <span style="color: var(--cyan);">май 2027</span></p>
-            <p><a href="https://github.com/elitra-team" target="_blank" style="color: var(--cyan); text-decoration: none;">GitHub</a></p>
-        </div>
+        <p>&copy; 2027 Elitra OS. Создано для будущего</p>
     </footer>
 
+    <!-- Подключение JavaScript -->
     <script src="js/main.js"></script>
 </body>
 </html>
