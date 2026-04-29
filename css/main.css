@@ -103,7 +103,7 @@ nav {
 }
 
 .hero-logo {
-    height: 200px;
+    height: 120px;
     width: auto;
     max-width: 100%;
     object-fit: contain;
@@ -447,5 +447,5 @@ footer {
     .countdown-value { font-size: 2rem; }
     .edition-card.featured { transform: scale(1); }
     .logo-img { height: 36px; }
-    .hero-logo { height: 140px; }
+    .hero-logo { height: 100px; }
 }
