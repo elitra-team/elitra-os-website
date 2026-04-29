@@ -336,6 +336,12 @@ h1 {
     transform: scale(1.05);
 }
 
+.edition-card.ultimate {
+    border-color: var(--purple);
+    box-shadow: 0 0 50px rgba(168, 85, 247, 0.3);
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(99, 102, 241, 0.1));
+}
+
 .edition-badge {
     position: absolute;
     top: -12px;
