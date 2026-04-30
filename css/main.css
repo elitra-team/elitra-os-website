@@ -87,6 +87,31 @@ nav {
     color: var(--cyan);
 }
 
+/* Roadmap Mobile */
+@media (max-width: 768px) {
+    .timeline::before {
+        left: 15px;
+    }
+    
+    .timeline-item {
+        padding-left: 45px;
+    }
+    
+    .timeline-marker {
+        left: 7px;
+        width: 16px;
+        height: 16px;
+    }
+    
+    .timeline-content {
+        padding: 1rem 1.5rem;
+    }
+    
+    .timeline-content h3 {
+        font-size: 1.2rem;
+    }
+}
+
 /* Hero Section */
 .hero {
     padding: 6rem 5% 4rem;
@@ -388,6 +413,100 @@ h1 {
     color: var(--cyan);
     margin-right: 0.5rem;
     font-weight: 700;
+}
+
+/* Roadmap */
+.roadmap {
+    padding: 6rem 5%;
+    background: linear-gradient(180deg, transparent, rgba(0, 212, 255, 0.03), transparent);
+}
+
+.timeline {
+    max-width: 900px;
+    margin: 3rem auto 0;
+    position: relative;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--cyan), var(--purple), var(--pink));
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 60px;
+    margin-bottom: 3rem;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: 12px;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--dark);
+    border: 3px solid var(--cyan);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+    z-index: 1;
+}
+
+.timeline-item.active .timeline-marker {
+    background: var(--cyan);
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.8);
+    transform: scale(1.2);
+}
+
+.timeline-content {
+    background: var(--surface);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    transition: all 0.3s;
+}
+
+.timeline-content:hover {
+    border-color: var(--cyan);
+    box-shadow: 0 10px 40px rgba(0, 212, 255, 0.15);
+    transform: translateX(5px);
+}
+
+.timeline-content h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #fff, var(--cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.timeline-date {
+    display: inline-block;
+    color: var(--cyan);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    padding: 0.3rem 0.8rem;
+    background: rgba(0, 212, 255, 0.1);
+    border-radius: 6px;
+}
+
+.timeline-content p {
+    color: #94a3b8;
+    line-height: 1.7;
+}
+
+.timeline-item.active .timeline-content {
+    border-color: var(--cyan);
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
 }
 
 /* Email Form */
