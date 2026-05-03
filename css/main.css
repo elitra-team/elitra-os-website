@@ -10,10 +10,10 @@
     --yellow-dark: #FFC300;
     --orange: #FFA500;
     --orange-dark: #FF8C00;
-    --light-gray: #D2D2D0;
-    --text-dark: #333333;
-    --text-muted: #666666;
-    --surface: rgba(255, 255, 255, 0.9);
+    --light-gray: #1a1a1a;
+    --text-dark: #f0f0f0;
+    --text-muted: #b0b0b0;
+    --surface: rgba(40, 40, 40, 0.9);
 }
 
 body {
@@ -45,7 +45,7 @@ nav {
     justify-content: space-between;
     align-items: center;
     backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(40, 40, 40, 0.95);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -557,7 +557,7 @@ h1 {
     padding: 1rem 1.5rem;
     border: 2px solid rgba(255, 165, 0, 0.3);
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(40, 40, 40, 0.8);
     color: var(--text-dark);
     font-size: 1rem;
     transition: border-color 0.3s;
