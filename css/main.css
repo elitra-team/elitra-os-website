@@ -18,24 +18,10 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--light-gray);
+    background: #000000;
     color: var(--text-dark);
     line-height: 1.6;
     overflow-x: hidden;
-}
-
-/* Animated gradient background */
-.bg-gradient {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-        radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(255, 165, 0, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 40% 20%, rgba(255, 140, 0, 0.06) 0%, transparent 50%);
-    z-index: -1;
 }
 
 /* Navigation */
@@ -64,13 +50,7 @@ nav {
     height: 42px;
     width: auto;
     display: block;
-    transition: transform 0.3s ease, filter 0.3s ease;
     object-fit: contain;
-}
-
-.logo-img:hover {
-    transform: scale(1.05);
-    filter: drop-shadow(0 0 8px rgba(255, 165, 0, 0.4));
 }
 
 .nav-links {
@@ -139,13 +119,6 @@ nav {
     width: auto;
     max-width: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 20px 40px rgba(255, 165, 0, 0.3));
-    animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(2deg); }
 }
 
 .badge {
