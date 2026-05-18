@@ -97,30 +97,29 @@
         .apps-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 24px;
+            gap: 2px;
             margin-top: 32px;
+            background-color: #ffb347;
+            border: 2px solid #ffb347;
         }
 
-        .app-card {
-            background-color: #1a1a1a;
-            border-radius: 12px;
-            padding: 24px;
-            transition: transform 0.2s, box-shadow 0.2s;
+        .app-item {
+            background-color: #0a0a0a;
+            padding: 32px 24px;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        .app-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(255, 179, 71, 0.1);
-        }
-
-        .app-card h3 {
+        .app-item h3 {
             font-size: 20px;
             font-weight: 500;
             color: #ffb347;
             margin-bottom: 12px;
         }
 
-        .app-card p {
+        .app-item p {
             font-size: 14px;
             color: #888;
             margin-bottom: 0;
@@ -180,15 +179,15 @@
         <section>
             <h2>Приложения</h2>
             <div class="apps-grid">
-                <div class="app-card">
+                <div class="app-item">
                     <h3>Elitra Launcher</h3>
                     <p>Минималистичный лаунчер с акцентом на скорость</p>
                 </div>
-                <div class="app-card">
+                <div class="app-item">
                     <h3>Elitra Weather</h3>
                     <p>Погодное приложение с чистым интерфейсом</p>
                 </div>
-                <div class="app-card">
+                <div class="app-item">
                     <h3>Elitra Notes</h3>
                     <p>Заметки без лишнего</p>
                 </div>
