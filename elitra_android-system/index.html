@@ -3,57 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Android Прошивка | Elitra Team</title>
-    <link rel="stylesheet" href="./styles.css">
+    <title>Android Прошивка — Elitra Team</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.7;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 24px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #0a0a0a;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 600;
+            color: #ffb347;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: #999;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #ffb347;
+        }
+
+        main {
+            padding: 160px 48px 80px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 56px;
+            font-weight: 300;
+            color: #ffb347;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: #888;
+            font-weight: 300;
+            margin-bottom: 80px;
+            max-width: 600px;
+        }
+
+        section {
+            margin-bottom: 120px;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 400;
+            color: #ffb347;
+            margin-bottom: 32px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #aaa;
+            margin-bottom: 24px;
+            max-width: 650px;
+            font-weight: 300;
+        }
+
+        footer {
+            padding: 48px;
+            text-align: center;
+            color: #555;
+            font-size: 13px;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px 24px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            main {
+                padding: 120px 24px 60px;
+            }
+
+            h1 {
+                font-size: 40px;
+            }
+
+            .subtitle {
+                font-size: 18px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">Elitra Team</div>
-            <ul class="nav-links">
-                <li><a href="../index.html">Главная</a></li>
-                <li><a href="../elitra_android-apps/index.html">Android Приложения</a></li>
-                <li><a href="./index.html">Android Прошивка</a></li>
-                <li><a href="../elitra_programming-language/index.html">Язык Программирования</a></li>
-            </ul>
-        </nav>
-    </header>
+    <nav>
+        <a href="../index.html" class="logo">Elitra Team</a>
+        <div class="nav-links">
+            <a href="../elitra_android-apps/index.html">Android Приложения</a>
+            <a href="index.html">Android Прошивка</a>
+            <a href="../elitra_programming-language/index.html">Язык Программирования</a>
+        </div>
+    </nav>
 
     <main>
-        <section class="hero">
-            <h1>Наша Android прошивка</h1>
-            <p>Кастомная прошивка с максимальной оптимизацией и новыми функциями</p>
+        <h1>Android Прошивка</h1>
+        <p class="subtitle">Кастомная прошивка Elitra OS для чистого и быстрого Android</p>
+
+        <section>
+            <h2>О прошивке</h2>
+            <p>Elitra OS — это легковесная кастомная прошивка на базе AOSP с минимальными изменениями и максимальной производительностью.</p>
         </section>
 
-        <section class="content">
-            <h2>О нашей прошивке</h2>
-            <p>Elitra OS — это кастомная прошивка на базе Android, разработанная нашей командой. Мы уделяем особое внимание производительности, безопасности и пользовательскому опыту.</p>
-            
-            <div class="features">
-                <div class="feature">
-                    <h3>🚀 Оптимизация</h3>
-                    <p>Улучшенная производительность и время работы батареи</p>
-                </div>
-                <div class="feature">
-                    <h3>🎨 Кастомизация</h3>
-                    <p>Гибкие настройки интерфейса под ваши предпочтения</p>
-                </div>
-                <div class="feature">
-                    <h3>🛡️ Безопасность</h3>
-                    <p>Регулярные обновления безопасности и защита данных</p>
-                </div>
-                <div class="feature">
-                    <h3>📲 Поддержка</h3>
-                    <p>Активное сообщество и техническая поддержка</p>
-                </div>
-            </div>
+        <section>
+            <h2>Особенности</h2>
+            <p>Чистый Android без лишних приложений</p>
+            <p>Оптимизированное энергопотребление</p>
+            <p>Регулярные обновления безопасности</p>
+            <p>Поддержка широкого спектра устройств</p>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 Elitra Team. Все права защищены.</p>
+        © 2025 Elitra Team. Все права защищены.
     </footer>
-
-    <script src="./script.js"></script>
 </body>
 </html>

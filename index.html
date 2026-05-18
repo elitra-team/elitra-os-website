@@ -3,60 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elitra Team | Главная страница</title>
-    <link rel="stylesheet" href="./elitra_main-page/styles.css">
+    <title>Elitra Team</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.7;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 24px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #0a0a0a;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 600;
+            color: #ffb347;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: #999;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #ffb347;
+        }
+
+        main {
+            padding: 160px 48px 80px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 56px;
+            font-weight: 300;
+            color: #ffb347;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: #888;
+            font-weight: 300;
+            margin-bottom: 80px;
+            max-width: 600px;
+        }
+
+        section {
+            margin-bottom: 120px;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 400;
+            color: #ffb347;
+            margin-bottom: 32px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #aaa;
+            margin-bottom: 24px;
+            max-width: 650px;
+            font-weight: 300;
+        }
+
+        .project-link {
+            display: inline-block;
+            color: #ffb347;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 8px 0;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .project-link:hover {
+            border-color: #ffb347;
+        }
+
+        footer {
+            padding: 48px;
+            text-align: center;
+            color: #555;
+            font-size: 13px;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px 24px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            main {
+                padding: 120px 24px 60px;
+            }
+
+            h1 {
+                font-size: 40px;
+            }
+
+            .subtitle {
+                font-size: 18px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">Elitra Team</div>
-            <ul class="nav-links">
-                <li><a href="./index.html">Главная</a></li>
-                <li><a href="./elitra_android-apps/index.html">Android Приложения</a></li>
-                <li><a href="./elitra_android-system/index.html">Android Прошивка</a></li>
-                <li><a href="./elitra_programming-language/index.html">Язык Программирования</a></li>
-            </ul>
-        </nav>
-    </header>
+    <nav>
+        <a href="index.html" class="logo">Elitra Team</a>
+        <div class="nav-links">
+            <a href="elitra_android-apps/index.html">Android Приложения</a>
+            <a href="elitra_android-system/index.html">Android Прошивка</a>
+            <a href="elitra_programming-language/index.html">Язык Программирования</a>
+        </div>
+    </nav>
 
     <main>
-        <section class="hero">
-            <h1>Добро пожаловать в Elitra Team</h1>
-            <p>Мы создаём инновационные решения для мобильной разработки</p>
-            <a href="#about" class="btn">Узнать больше</a>
-        </section>
+        <h1>Elitra Team</h1>
+        <p class="subtitle">Создаём инновационные решения для мобильной экосистемы и разработки программного обеспечения</p>
 
-        <section id="about" class="about">
+        <section>
             <h2>О нас</h2>
-            <p>Elitra Team — команда разработчиков, специализирующаяся на создании Android-приложений, кастомных прошивок и собственных инструментов разработки.</p>
+            <p>Мы — команда разработчиков, увлечённых созданием качественных продуктов. Наши проекты охватывают мобильные приложения, кастомные прошивки и инструменты для разработчиков.</p>
         </section>
 
-        <section class="projects">
-            <h2>Наши проекты</h2>
-            <div class="project-cards">
-                <div class="card">
-                    <h3>Android Приложения</h3>
-                    <p>Современные и функциональные приложения для Android</p>
-                    <a href="./elitra_android-apps/index.html">Подробнее →</a>
-                </div>
-                <div class="card">
-                    <h3>Android Прошивка</h3>
-                    <p>Кастомная прошивка с оптимизацией и новыми функциями</p>
-                    <a href="./elitra_android-system/index.html">Подробнее →</a>
-                </div>
-                <div class="card">
-                    <h3>Язык Программирования</h3>
-                    <p>Наш собственный язык для эффективной разработки</p>
-                    <a href="./elitra_programming-language/index.html">Подробнее →</a>
-                </div>
-            </div>
+        <section>
+            <h2>Проекты</h2>
+            <p><a href="elitra_android-apps/index.html" class="project-link">Android Приложения →</a></p>
+            <p><a href="elitra_android-system/index.html" class="project-link">Android Прошивка →</a></p>
+            <p><a href="elitra_programming-language/index.html" class="project-link">Язык Программирования →</a></p>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 Elitra Team. Все права защищены.</p>
+        © 2025 Elitra Team. Все права защищены.
     </footer>
-
-    <script src="./elitra_main-page/script.js"></script>
 </body>
 </html>
