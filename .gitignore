@@ -14,8 +14,6 @@ venv/
 node_modules/
 .julia/
 zig-cache/
-.dep/
-*.deps/
 
 # Logs and temp files
 *.log
@@ -26,7 +24,7 @@ zig-cache/
 # Environment
 .env
 .env.local
-.env.*
+*.env.*
 
 # Editors
 .vscode/
@@ -34,7 +32,7 @@ zig-cache/
 *.swp
 *.swo
 
-# OS specific
+# System files
 .DS_Store
 Thumbs.db
 
@@ -50,12 +48,41 @@ __pycache__/
 *.pyd
 .Python
 *.so
-.coverage
-coverage.xml
+*.egg-info/
+.eggs/
 
-# Build systems
-.gradle/
+# MyPy
 .mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pytest
 .pytest_cache/
-.tox/
+
+# Gradle
+.gradle/
+
+# Compression files
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.zst
 ```
