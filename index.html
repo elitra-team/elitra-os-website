@@ -1,13 +1,610 @@
-<body>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Городская прогулка — травяные газоны и белые дорожки</title>
     <style>
-        * {
-            background-color: black;
-            font-weight: bolder;
-            font-face: sans-serif;
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
+            touch-action: none;
+        }
+        
+        /* UI-элементы */
+        #ui {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            z-index: 20;
+            pointer-events: none;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .controls-hint {
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 14px;
+            color: #eee;
+            font-family: monospace;
+            border-left: 3px solid #ffaa66;
+            pointer-events: auto;
+        }
+        
+        .controls-hint kbd {
+            background: #2c2c2c;
+            border-radius: 6px;
+            padding: 2px 8px;
+            margin: 0 4px;
+            font-weight: bold;
+            color: #ffcc88;
+        }
+        
+        #crosshair {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 4px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.4);
+            z-index: 20;
+            pointer-events: none;
+        }
+        
+        .info {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #ddd;
+            font-family: monospace;
+            pointer-events: none;
+        }
+        
+        .fullscreen-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            border: none;
+            border-radius: 40px;
+            padding: 8px 16px;
             color: white;
+            font-size: 14px;
+            font-family: monospace;
+            cursor: pointer;
+            z-index: 30;
+            pointer-events: auto;
+            transition: 0.2s;
+            font-weight: bold;
+        }
+        
+        .fullscreen-btn:hover {
+            background: rgba(0,0,0,0.8);
+            transform: scale(1.02);
+        }
+        
+        /* Сенсорное управление (для телефонов) */
+        .touch-controls {
+            position: absolute;
+            bottom: 30px;
+            right: 20px;
+            left: 20px;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            z-index: 25;
+            pointer-events: none;
+        }
+        
+        .touch-panel {
+            pointer-events: auto;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(12px);
+            border-radius: 60px;
+            padding: 12px 20px;
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .touch-btn {
+            background: rgba(30,30,40,0.85);
+            border: none;
+            color: #ffdd99;
+            font-size: 28px;
+            font-weight: bold;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: 0.05s linear;
+            touch-action: manipulation;
+            font-family: monospace;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,200,100,0.5);
+        }
+        
+        .touch-btn:active {
+            background: #ffaa33;
+            color: #1e1e2a;
+            transform: scale(0.95);
+        }
+        
+        @media (max-width: 768px) {
+            .touch-controls { display: flex; }
+            .controls-hint { font-size: 10px; padding: 5px 12px; }
+            .fullscreen-btn { font-size: 12px; padding: 6px 12px; top: 12px; left: 12px; }
+            .info { font-size: 10px; top: 12px; right: 12px; }
+            .touch-btn { width: 55px; height: 55px; font-size: 24px; }
+        }
+        
+        @media (max-width: 480px) {
+            .touch-btn { width: 50px; height: 50px; font-size: 22px; }
+            .touch-panel { gap: 15px; padding: 8px 15px; }
+        }
+        
+        @media (orientation: landscape) and (max-width: 900px) {
+            .touch-controls { bottom: 15px; }
+            .touch-btn { width: 48px; height: 48px; font-size: 22px; }
         }
     </style>
-    <center>
-        <h1>Сайт пока не готов</h1>
-    </center>
+</head>
+<body>
+    <button class="fullscreen-btn" id="fullscreen-btn">⛶ Полный экран</button>
+    <div id="ui">
+        <div class="controls-hint">
+            🚶‍♂️ Прогулка &nbsp;|&nbsp;
+            <kbd>WASD</kbd> или 🎮 кнопки &nbsp;|&nbsp;
+            🖱️ Мышь / палец для обзора
+        </div>
+        <div class="info">
+            🌿 Травяные газоны • белые дорожки
+        </div>
+    </div>
+    <div id="crosshair"></div>
+    
+    <div class="touch-controls" id="touchControls">
+        <div></div>
+        <div class="touch-panel">
+            <button class="touch-btn" data-key="w">▲</button>
+            <button class="touch-btn" data-key="a">◀</button>
+            <button class="touch-btn" data-key="s">▼</button>
+            <button class="touch-btn" data-key="d">▶</button>
+        </div>
+        <div></div>
+    </div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+
+        // --- ИНИЦИАЛИЗАЦИЯ СЦЕНЫ ---
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x87CEEB);
+        scene.fog = new THREE.FogExp2(0x87CEEB, 0.0035);
+        
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.05, 300);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        document.body.appendChild(renderer.domElement);
+        
+        // --- ЗАГРУЗКА ТЕКСТУР (трава и белая плитка) ---
+        const textureLoader = new THREE.TextureLoader();
+        
+        // Текстура травы (для газонов и земли под дорогами)
+        const grassTexture = textureLoader.load('./assets/textures/grass.jpeg');
+        grassTexture.wrapS = THREE.RepeatWrapping;
+        grassTexture.wrapT = THREE.RepeatWrapping;
+        grassTexture.repeat.set(6, 6);  // Частое повторение для естественного вида травы
+        
+        // Текстура белой плиточной дорожки
+        const tileTexture = textureLoader.load('./assets/textures/white_tiled_path.jpeg');
+        tileTexture.wrapS = THREE.RepeatWrapping;
+        tileTexture.wrapT = THREE.RepeatWrapping;
+        tileTexture.repeat.set(4, 4);
+        
+        // Материалы
+        const grassMaterial = new THREE.MeshStandardMaterial({ map: grassTexture, roughness: 0.7, metalness: 0.05 });
+        const pathMaterial = new THREE.MeshStandardMaterial({ map: tileTexture, roughness: 0.5, metalness: 0.05 });
+        
+        // --- ОСВЕЩЕНИЕ ---
+        const ambientLight = new THREE.AmbientLight(0x6c7a8c, 0.6);
+        scene.add(ambientLight);
+        const sunLight = new THREE.DirectionalLight(0xfff5e0, 1.2);
+        sunLight.position.set(15, 20, 5);
+        sunLight.castShadow = true;
+        sunLight.shadow.mapSize.width = 1024;
+        sunLight.shadow.mapSize.height = 1024;
+        sunLight.shadow.camera.near = 0.5;
+        sunLight.shadow.camera.far = 45;
+        sunLight.shadow.camera.left = -12;
+        sunLight.shadow.camera.right = 12;
+        sunLight.shadow.camera.top = 12;
+        sunLight.shadow.camera.bottom = -12;
+        scene.add(sunLight);
+        
+        const fillLight = new THREE.PointLight(0xccaa88, 0.35);
+        fillLight.position.set(0, 2, 0);
+        scene.add(fillLight);
+        const backFill = new THREE.PointLight(0xaaccff, 0.25);
+        backFill.position.set(-5, 8, -8);
+        scene.add(backFill);
+        
+        // --- ОСНОВНАЯ ПЛОЩАДЬ (ГАЗОН С ТЕКСТУРОЙ ТРАВЫ) ---
+        // Большая плоскость земли покрытая травой (под всем городом)
+        const groundPlane = new THREE.Mesh(new THREE.PlaneGeometry(110, 110), grassMaterial);
+        groundPlane.rotation.x = -Math.PI / 2;
+        groundPlane.position.y = -0.05;
+        groundPlane.receiveShadow = true;
+        scene.add(groundPlane);
+        
+        // --- ДОРОЖКИ ИЗ БЕЛОЙ ПЛИТКИ ---
+        // Горизонтальная дорога (вдоль X)
+        const horizontalRoad = new THREE.Mesh(new THREE.PlaneGeometry(42, 6), pathMaterial);
+        horizontalRoad.rotation.x = -Math.PI / 2;
+        horizontalRoad.position.set(0, -0.02, 0);
+        horizontalRoad.receiveShadow = true;
+        scene.add(horizontalRoad);
+        
+        // Вертикальная дорога (вдоль Z)
+        const verticalRoad = new THREE.Mesh(new THREE.PlaneGeometry(6, 42), pathMaterial);
+        verticalRoad.rotation.x = -Math.PI / 2;
+        verticalRoad.position.set(0, -0.02, 0);
+        verticalRoad.receiveShadow = true;
+        scene.add(verticalRoad);
+        
+        // Центральная площадь (квадрат из плитки)
+        const centralSquare = new THREE.Mesh(new THREE.PlaneGeometry(12, 12), pathMaterial);
+        centralSquare.rotation.x = -Math.PI / 2;
+        centralSquare.position.set(0, -0.02, 0);
+        centralSquare.receiveShadow = true;
+        scene.add(centralSquare);
+        
+        // --- РАЗМЕТКА (декоративные белые полосы по краям дорожек) ---
+        const lineMat = new THREE.MeshStandardMaterial({ color: 0xfff0cc });
+        for (let i = -18; i <= 18; i+=3) {
+            if (Math.abs(i) < 5) continue;
+            const line = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.05, 2.2), lineMat);
+            line.position.set(i, 0.03, 0);
+            scene.add(line);
+            const lineZ = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.05, 0.15), lineMat);
+            lineZ.position.set(0, 0.03, i);
+            scene.add(lineZ);
+        }
+        
+        // --- ЗДАНИЯ ---
+        const buildingColors = [0xc7b5a5, 0xb8a28c, 0x9b8a74, 0xa5927a, 0xbcab93, 0x8e7b63, 0xd2c1ad];
+        const windowMat = new THREE.MeshStandardMaterial({ color: 0xfcf4d9, emissive: 0x443311, emissiveIntensity: 0.1 });
+        const buildingPositions = [];
+        
+        function createBuilding(x, z, width, depth, height, colorIdx = null) {
+            const color = colorIdx !== null ? buildingColors[colorIdx % buildingColors.length] : buildingColors[Math.floor(Math.random() * buildingColors.length)];
+            const material = new THREE.MeshStandardMaterial({ color, roughness: 0.3, metalness: 0.05 });
+            const building = new THREE.Mesh(new THREE.BoxGeometry(width, height, depth), material);
+            building.position.set(x, height / 2, z);
+            building.castShadow = true;
+            building.receiveShadow = true;
+            scene.add(building);
+            // Окна
+            for (let i = 0; i < Math.floor(height / 1.2); i++) {
+                for (let j = -1; j <= 1; j++) {
+                    const wx = (j * width * 0.3);
+                    const wz = depth/2 + 0.05;
+                    const win = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.7, 0.05), windowMat);
+                    win.position.set(x + wx, 0.6 + i * 1.1, z + wz);
+                    scene.add(win);
+                    const winBack = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.7, 0.05), windowMat);
+                    winBack.position.set(x + wx, 0.6 + i * 1.1, z - wz);
+                    scene.add(winBack);
+                }
+            }
+            buildingPositions.push({ x, z, radius: Math.max(width, depth) * 0.6 });
+            return building;
+        }
+        
+        // Сетка зданий
+        for (let i = -3; i <= 4; i++) {
+            for (let j = -3; j <= 4; j++) {
+                if (i === 0 && j === 0) continue;
+                const x = i * 5.2 + (Math.random() - 0.5) * 1.2;
+                const z = j * 5.2 + (Math.random() - 0.5) * 1.2;
+                if (Math.abs(x) < 5 && Math.abs(z) < 5) continue;
+                const w = 1.6 + Math.random() * 0.8;
+                const d = 1.6 + Math.random() * 0.8;
+                const h = 2.2 + Math.random() * 2.5;
+                createBuilding(x, z, w, d, h);
+            }
+        }
+        const edgePositions = [[-14,-12],[14,-12],[-14,12],[14,12],[-16,0],[16,0],[0,-16],[0,16]];
+        edgePositions.forEach(pos => { createBuilding(pos[0], pos[1], 2.2, 2.2, 4.5, 2); createBuilding(pos[0]+1.5, pos[1]+1.5, 1.8, 1.8, 3.8, 4); });
+        
+        // --- ДЕРЕВЬЯ (на траве) ---
+        const trunkMat = new THREE.MeshStandardMaterial({ color: 0x8B5A2B });
+        const foliageMat = new THREE.MeshStandardMaterial({ color: 0x5A9E4E });
+        const treePositions = [];
+        for (let i = 0; i < 180; i++) {
+            let x = (Math.random() - 0.5) * 38;
+            let z = (Math.random() - 0.5) * 38;
+            if (Math.abs(x) < 7 && Math.abs(z) < 7) continue;
+            let tooClose = false;
+            for (let b of buildingPositions) if (Math.hypot(x - b.x, z - b.z) < 1.4) tooClose = true;
+            if (!tooClose && Math.abs(x) < 19 && Math.abs(z) < 19) {
+                const group = new THREE.Group();
+                const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.6, 1.2, 6), trunkMat);
+                trunk.position.y = 0.6;
+                group.add(trunk);
+                const f1 = new THREE.Mesh(new THREE.ConeGeometry(0.7, 1.0, 8), foliageMat);
+                f1.position.y = 1.2;
+                group.add(f1);
+                const f2 = new THREE.Mesh(new THREE.ConeGeometry(0.55, 0.9, 8), foliageMat);
+                f2.position.y = 1.9;
+                group.add(f2);
+                group.position.set(x, 0, z);
+                scene.add(group);
+                treePositions.push({ x, z, radius: 0.6 });
+            }
+        }
+        
+        // --- ФОНАРИ (атмосфера) ---
+        const lampMat = new THREE.MeshStandardMaterial({ color: 0xc2b280 });
+        const lampLightMat = new THREE.MeshStandardMaterial({ color: 0xffdd99, emissive: 0xffaa66, emissiveIntensity: 0.4 });
+        function addLamp(x, z) {
+            const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.35, 2.8, 5), lampMat);
+            pole.position.set(x, 1.4, z);
+            scene.add(pole);
+            const head = new THREE.Mesh(new THREE.SphereGeometry(0.32, 8), lampLightMat);
+            head.position.set(x, 2.9, z);
+            scene.add(head);
+            const light = new THREE.PointLight(0xffaa66, 0.55, 14);
+            light.position.set(x, 2.7, z);
+            scene.add(light);
+        }
+        for (let i = -14; i <= 14; i+=4) if (Math.abs(i) > 5) { addLamp(i,0); addLamp(0,i); addLamp(i,i); addLamp(-i,i); }
+        
+        // --- УПРАВЛЕНИЕ (камера + движение) ---
+        const yawObject = new THREE.Object3D();
+        const pitchObject = new THREE.Object3D();
+        pitchObject.add(camera);
+        yawObject.add(pitchObject);
+        scene.add(yawObject);
+        yawObject.position.set(0, 1.65, 0);
+        camera.position.set(0, 0, 0);
+        
+        // Клавиши
+        const keyState = { KeyW: false, KeyS: false, KeyA: false, KeyD: false, ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false };
+        let moveForward = false, moveBack = false, moveLeft = false, moveRight = false;
+        const MOVE_SPEED = 5.2;
+        
+        function updateMoveFlags() {
+            moveForward = keyState.KeyW || keyState.ArrowUp;
+            moveBack = keyState.KeyS || keyState.ArrowDown;
+            moveLeft = keyState.KeyA || keyState.ArrowLeft;
+            moveRight = keyState.KeyD || keyState.ArrowRight;
+        }
+        
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'KeyR') { yawObject.position.set(0,1.65,0); yawObject.rotation.y=0; pitchObject.rotation.x=0; yawRotation=0; pitchRotation=0; e.preventDefault(); return; }
+            if (keyState.hasOwnProperty(e.code)) { keyState[e.code] = true; updateMoveFlags(); e.preventDefault(); }
+        });
+        window.addEventListener('keyup', (e) => {
+            if (keyState.hasOwnProperty(e.code)) { keyState[e.code] = false; updateMoveFlags(); e.preventDefault(); }
+        });
+        
+        // Мышь / тач управление камерой
+        let controlsEnabled = true;
+        let yawRotation = 0, pitchRotation = 0;
+        const mouseSensitivity = 0.002;
+        let isPointerLock = false;
+        let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        let touchStartX = 0, touchStartY = 0;
+        let touchActive = false;
+        
+        function handleTouchStart(e) {
+            if (!isMobile) return;
+            e.preventDefault();
+            const touch = e.touches[0];
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+            touchActive = true;
+        }
+        
+        function handleTouchMove(e) {
+            if (!isMobile || !touchActive) return;
+            e.preventDefault();
+            const touch = e.touches[0];
+            const deltaX = touch.clientX - touchStartX;
+            const deltaY = touch.clientY - touchStartY;
+            if (Math.abs(deltaX) > 2 || Math.abs(deltaY) > 2) {
+                yawRotation -= deltaX * mouseSensitivity;
+                pitchRotation -= deltaY * mouseSensitivity;
+                pitchRotation = Math.max(-Math.PI / 2.4, Math.min(Math.PI / 2.4, pitchRotation));
+                yawObject.rotation.y = yawRotation;
+                pitchObject.rotation.x = pitchRotation;
+                touchStartX = touch.clientX;
+                touchStartY = touch.clientY;
+            }
+        }
+        
+        function handleTouchEnd(e) {
+            if (!isMobile) return;
+            touchActive = false;
+        }
+        
+        if (isMobile) {
+            renderer.domElement.style.touchAction = 'none';
+            renderer.domElement.addEventListener('touchstart', handleTouchStart, { passive: false });
+            renderer.domElement.addEventListener('touchmove', handleTouchMove, { passive: false });
+            renderer.domElement.addEventListener('touchend', handleTouchEnd);
+            document.body.style.cursor = 'default';
+        } else {
+            const canvas = renderer.domElement;
+            canvas.addEventListener('click', () => { canvas.requestPointerLock(); });
+            document.addEventListener('pointerlockchange', () => {
+                if (document.pointerLockElement === canvas) {
+                    isPointerLock = true;
+                    document.addEventListener('mousemove', onMouseMove);
+                    document.body.style.cursor = 'none';
+                } else {
+                    isPointerLock = false;
+                    document.removeEventListener('mousemove', onMouseMove);
+                    document.body.style.cursor = 'auto';
+                }
+            });
+            function onMouseMove(e) {
+                if (!isPointerLock) return;
+                yawRotation -= e.movementX * mouseSensitivity;
+                pitchRotation -= e.movementY * mouseSensitivity;
+                pitchRotation = Math.max(-Math.PI / 2.4, Math.min(Math.PI / 2.4, pitchRotation));
+                yawObject.rotation.y = yawRotation;
+                pitchObject.rotation.x = pitchRotation;
+            }
+        }
+        
+        // --- КОЛЛИЗИИ ---
+        const collidables = [...buildingPositions.map(b => ({ x: b.x, z: b.z, radius: b.radius })), ...treePositions];
+        function checkCollision(x, z) {
+            for (let c of collidables) {
+                if (Math.hypot(x - c.x, z - c.z) < c.radius + 0.45) return true;
+            }
+            if (Math.abs(x) > 24 || Math.abs(z) > 24) return true;
+            return false;
+        }
+        
+        let lastTime = performance.now();
+        function updateMovement(deltaSec) {
+            if (!controlsEnabled) return;
+            const speed = MOVE_SPEED * deltaSec;
+            const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(yawObject.quaternion);
+            const right = new THREE.Vector3(1, 0, 0).applyQuaternion(yawObject.quaternion);
+            let dx = 0, dz = 0;
+            if (moveForward) { dx += forward.x; dz += forward.z; }
+            if (moveBack) { dx -= forward.x; dz -= forward.z; }
+            if (moveLeft) { dx -= right.x; dz -= right.z; }
+            if (moveRight) { dx += right.x; dz += right.z; }
+            const len = Math.hypot(dx, dz);
+            if (len > 0.01) { dx /= len; dz /= len; }
+            let newX = yawObject.position.x + dx * speed;
+            let newZ = yawObject.position.z + dz * speed;
+            if (!checkCollision(newX, yawObject.position.z)) yawObject.position.x = newX;
+            if (!checkCollision(yawObject.position.x, newZ)) yawObject.position.z = newZ;
+        }
+        
+        // --- ДЕКОРАТИВНЫЕ ОБЛАКА И ЛИСТВА ---
+        const cloudMatDec = new THREE.MeshStandardMaterial({ color: 0xf8f8fc });
+        const clouds = [];
+        for (let i = 0; i < 35; i++) {
+            const cg = new THREE.Group();
+            [0.8,0.6,0.5].forEach((s,idx) => {
+                const part = new THREE.Mesh(new THREE.SphereGeometry(s, 7), cloudMatDec);
+                part.position.set(idx*0.7-0.7, idx*0.2-0.2, 0);
+                cg.add(part);
+            });
+            cg.position.set((Math.random()-0.5)*60, 12+Math.random()*8, (Math.random()-0.5)*40-20);
+            cg.scale.set(1.2,0.9,0.7);
+            scene.add(cg);
+            clouds.push(cg);
+        }
+        
+        const leafCount = 400;
+        const leafGeo = new THREE.BufferGeometry();
+        const leafPos = new Float32Array(leafCount*3);
+        for (let i=0;i<leafCount;i++) { leafPos[i*3]=(Math.random()-0.5)*48; leafPos[i*3+1]=Math.random()*2.5; leafPos[i*3+2]=(Math.random()-0.5)*48; }
+        leafGeo.setAttribute('position', new THREE.BufferAttribute(leafPos,3));
+        const leaves = new THREE.Points(leafGeo, new THREE.PointsMaterial({ color: 0xa8d66b, size: 0.07, transparent: true, opacity: 0.4 }));
+        scene.add(leaves);
+        
+        function animateAmbient(delta) {
+            clouds.forEach((c,idx) => { c.position.x += 0.008 * (idx%2===0?1:-1); if(c.position.x>35)c.position.x=-35; if(c.position.x<-35)c.position.x=35; });
+            leaves.rotation.y += 0.002;
+        }
+        
+        // --- СЕНСОРНЫЕ КНОПКИ ---
+        const touchBtns = document.querySelectorAll('.touch-btn');
+        touchBtns.forEach(btn => {
+            const key = btn.dataset.key.toUpperCase();
+            const code = `Key${key.toUpperCase()}`;
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                keyState[code] = true;
+                updateMoveFlags();
+            });
+            btn.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                keyState[code] = false;
+                updateMoveFlags();
+            });
+            btn.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                keyState[code] = true;
+                updateMoveFlags();
+            });
+            btn.addEventListener('mouseup', (e) => {
+                e.preventDefault();
+                keyState[code] = false;
+                updateMoveFlags();
+            });
+        });
+        
+        // --- ПОЛНОЭКРАННЫЙ РЕЖИМ ---
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => console.warn(err));
+            } else {
+                document.exitFullscreen();
+            }
+        }
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+        
+        // --- ЦИКЛ АНИМАЦИИ ---
+        let prevTime = performance.now();
+        function gameLoop() {
+            const now = performance.now();
+            let delta = Math.min(0.033, (now - prevTime) / 1000);
+            prevTime = now;
+            updateMovement(delta);
+            animateAmbient(delta);
+            renderer.render(scene, camera);
+            requestAnimationFrame(gameLoop);
+        }
+        
+        gameLoop();
+        
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+        
+        console.log('🌿 Городская прогулка с текстурой травы и белыми дорожками запущена. Файлы: grass.jpeg и white_tiled_path.jpeg в ./assets/textures/');
+    </script>
 </body>
+</html>
