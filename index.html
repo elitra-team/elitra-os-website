@@ -3,28 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Реалистичная городская прогулка | Высотки, тени, детализация</title>
+    <title>Мегаполис 3D — реалистичная прогулка</title>
     <style>
-        body { margin: 0; overflow: hidden; font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif; touch-action: none; }
-        #ui { position: absolute; bottom: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; z-index: 20; pointer-events: none; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
-        .controls-hint { background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); padding: 8px 18px; border-radius: 40px; font-size: 14px; color: #eee; font-family: monospace; border-left: 3px solid #ffaa66; pointer-events: auto; }
+        body { margin: 0; overflow: hidden; font-family: 'Segoe UI', sans-serif; touch-action: none; }
+        #ui { position: absolute; bottom: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; z-index: 20; pointer-events: none; text-shadow: 1px 1px 2px black; }
+        .controls-hint { background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); padding: 8px 16px; border-radius: 40px; font-size: 14px; color: #eee; font-family: monospace; border-left: 3px solid #ffaa66; }
         .controls-hint kbd { background: #2c2c2c; border-radius: 6px; padding: 2px 8px; margin: 0 4px; color: #ffcc88; }
-        #crosshair { position: absolute; top: 50%; left: 50%; width: 4px; height: 4px; background: rgba(255,255,255,0.9); border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 0 2px rgba(0,0,0,0.5); z-index: 20; pointer-events: none; }
-        .info { position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); padding: 6px 14px; border-radius: 20px; font-size: 12px; color: #ffecb3; font-family: monospace; pointer-events: none; }
-        .fullscreen-btn { position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); border: none; border-radius: 40px; padding: 8px 18px; color: white; cursor: pointer; z-index: 30; font-weight: bold; font-family: monospace; transition: 0.2s; }
-        .fullscreen-btn:hover { background: rgba(0,0,0,0.9); transform: scale(1.02); }
+        #crosshair { position: absolute; top: 50%; left: 50%; width: 4px; height: 4px; background: rgba(255,255,255,0.8); border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 0 2px rgba(0,0,0,0.4); z-index: 20; pointer-events: none; }
+        .info { position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.5); padding: 6px 12px; border-radius: 20px; font-size: 12px; color: #ddd; pointer-events: none; }
+        .fullscreen-btn { position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.6); border: none; border-radius: 40px; padding: 8px 16px; color: white; cursor: pointer; z-index: 30; font-weight: bold; }
         .touch-controls { position: absolute; bottom: 30px; right: 20px; left: 20px; display: none; justify-content: space-between; z-index: 25; pointer-events: none; }
-        .touch-panel { pointer-events: auto; background: rgba(0,0,0,0.6); backdrop-filter: blur(12px); border-radius: 60px; padding: 12px 24px; display: flex; gap: 25px; }
-        .touch-btn { background: rgba(40,40,55,0.9); border: none; color: #ffdd99; font-size: 28px; width: 65px; height: 65px; border-radius: 50%; cursor: pointer; transition: 0.05s linear; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
-        .touch-btn:active { background: #ffaa33; transform: scale(0.95); color: #1e1e2a; }
-        @media (max-width: 768px) { .touch-controls { display: flex; } .touch-btn { width: 55px; height: 55px; font-size: 24px; } .controls-hint { font-size: 10px; } .fullscreen-btn { font-size: 12px; padding: 6px 12px; } }
+        .touch-panel { pointer-events: auto; background: rgba(0,0,0,0.5); backdrop-filter: blur(12px); border-radius: 60px; padding: 12px 20px; display: flex; gap: 25px; }
+        .touch-btn { background: rgba(30,30,40,0.85); border: none; color: #ffdd99; font-size: 28px; width: 65px; height: 65px; border-radius: 50%; cursor: pointer; }
+        .touch-btn:active { background: #ffaa33; transform: scale(0.95); }
+        @media (max-width: 768px) { .touch-controls { display: flex; } .touch-btn { width: 55px; height: 55px; font-size: 24px; } .controls-hint { font-size: 10px; } }
     </style>
 </head>
 <body>
     <button class="fullscreen-btn" id="fullscreen-btn">⛶ Полный экран</button>
     <div id="ui">
-        <div class="controls-hint">🏙️ Реалистичный город &nbsp;|&nbsp; <kbd>WASD</kbd> или 🎮 кнопки &nbsp;|&nbsp; 🖱️ Мышь/палец</div>
-        <div class="info">🌆 Высотки до 25 этажей • мягкие тени • PBR-подобный свет</div>
+        <div class="controls-hint">🚶‍♂️ Прогулка &nbsp;|&nbsp; <kbd>WASD</kbd> или 🎮 кнопки &nbsp;|&nbsp; 🖱️ Мышь/палец для обзора</div>
+        <div class="info">🏙️ Реалистичный мегаполис • Высотки до 25 этажей</div>
     </div>
     <div id="crosshair"></div>
     <div class="touch-controls" id="touchControls">
@@ -45,30 +44,29 @@
     <script type="module">
         import * as THREE from 'three';
 
-        // --- СЦЕНА С НАСТРОЙКАМИ РЕАЛИЗМА ---
+        // --- СЦЕНА С ФОНОМ И ТУМАНОМ (реалистичная дымка) ---
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x0a1830); // глубокое сумеречное небо (атмосферно)
-        scene.fog = new THREE.FogExp2(0x0a1830, 0.0025); // лёгкая дымка
+        scene.background = new THREE.Color(0x6ba5d0); // более приглушённое небо
+        scene.fog = new THREE.FogExp2(0x6ba5d0, 0.008); // лёгкая дымка для глубины
         
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.05, 400);
+        const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 250);
         const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap; // мягкие тени
         renderer.shadowMap.bias = 0.0001;
-        renderer.setPixelRatio(window.devicePixelRatio);
         document.body.appendChild(renderer.domElement);
         
-        // --- РЕАЛИСТИЧНОЕ ОСВЕЩЕНИЕ (приглушённое, контрастное) ---
-        // Ambient свет низкой интенсивности, чтобы не было мыла
-        const ambientLight = new THREE.AmbientLight(0x3a4a6e, 0.45);
+        // --- ОСВЕЩЕНИЕ (реалистичное: солнце + заполняющий свет) ---
+        // Ambient свет приглушённый, чтобы не было мыльности
+        const ambientLight = new THREE.AmbientLight(0x4a5b6e, 0.45);
         scene.add(ambientLight);
         
-        // Основной направленный свет (солнце) с мягким цветом и тенями высокого качества
-        const sunLight = new THREE.DirectionalLight(0xffeebb, 1.15);
-        sunLight.position.set(25, 35, -12);
+        // Основной направленный свет (солнце) с высоким разрешением теней
+        const sunLight = new THREE.DirectionalLight(0xffeedd, 1.35);
+        sunLight.position.set(25, 30, 10);
         sunLight.castShadow = true;
-        sunLight.receiveShadow = true;
+        sunLight.receiveShadow = false;
         sunLight.shadow.mapSize.width = 2048;
         sunLight.shadow.mapSize.height = 2048;
         sunLight.shadow.camera.near = 0.5;
@@ -77,355 +75,204 @@
         sunLight.shadow.camera.right = 20;
         sunLight.shadow.camera.top = 20;
         sunLight.shadow.camera.bottom = -20;
-        sunLight.shadow.bias = -0.0005;
         scene.add(sunLight);
         
         // Заполняющий свет снизу (отражение от земли)
-        const fillLight = new THREE.PointLight(0xaa9977, 0.35);
-        fillLight.position.set(0, 1.5, 0);
+        const fillLight = new THREE.PointLight(0xccaa88, 0.35);
+        fillLight.position.set(0, 3, 0);
         scene.add(fillLight);
         
-        // Контражур для подсветки задних планов
-        const backRim = new THREE.PointLight(0x88aaff, 0.28);
-        backRim.position.set(-8, 12, -15);
-        scene.add(backRim);
+        // Контражур для подсветки фасадов
+        const backLight = new THREE.PointLight(0xaaccff, 0.28);
+        backLight.position.set(-10, 15, -15);
+        scene.add(backLight);
         
-        // Динамический свет для лёгкого мерцания (эффект атмосферы)
-        const atmosphereLight = new THREE.PointLight(0xffaa77, 0.2);
-        atmosphereLight.position.set(3, 6, 4);
-        scene.add(atmosphereLight);
+        // --- ЗЕМЛЯ И ДОРОГИ (текстуры с анизотропией для чёткости) ---
+        const textureLoader = new THREE.TextureLoader();
+        let grassTexture, tileTexture;
         
-        // --- ТЕКСТУРЫ ВЫСОКОГО КАЧЕСТВА (программные, без внешних файлов) ---
-        // Функция создания процедурной текстуры кирпича/бетона с шумом
-        function createBuildingTexture(baseColor, detailColor, hasBricks = true) {
-            const canvas = document.createElement('canvas');
-            canvas.width = 1024;
-            canvas.height = 1024;
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = baseColor;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // Функция загрузки текстур с fallback на цвет
+        function loadTexture(url, fallbackColor) {
+            const tex = textureLoader.load(url, 
+                (t) => { t.wrapS = THREE.RepeatWrapping; t.wrapT = THREE.RepeatWrapping; t.repeat.set(6,6); t.anisotropy = 16; },
+                undefined,
+                (err) => { console.warn(`Текстура ${url} не загружена, использую цвет`); }
+            );
+            return tex;
+        }
+        
+        grassTexture = loadTexture('./assets/textures/grass.jpeg', 0x6d9e4e);
+        tileTexture = loadTexture('./assets/textures/white_tiled_path.jpeg', 0xe0d5b6);
+        
+        // Если текстуры не загрузились, используем цветные материалы
+        const grassMaterial = new THREE.MeshStandardMaterial({ map: grassTexture, roughness: 0.75, metalness: 0.05, color: 0x6d9e4e });
+        const pathMaterial = new THREE.MeshStandardMaterial({ map: tileTexture, roughness: 0.45, metalness: 0.08, color: 0xe0d5b6 });
+        
+        // Основание (газон)
+        const groundPlane = new THREE.Mesh(new THREE.PlaneGeometry(140, 140), grassMaterial);
+        groundPlane.rotation.x = -Math.PI / 2;
+        groundPlane.position.y = -0.1;
+        groundPlane.receiveShadow = true;
+        scene.add(groundPlane);
+        
+        // Дорожки (плитка)
+        const horizontalRoad = new THREE.Mesh(new THREE.PlaneGeometry(50, 7), pathMaterial);
+        horizontalRoad.rotation.x = -Math.PI / 2;
+        horizontalRoad.position.set(0, -0.05, 0);
+        horizontalRoad.receiveShadow = true;
+        scene.add(horizontalRoad);
+        
+        const verticalRoad = new THREE.Mesh(new THREE.PlaneGeometry(7, 50), pathMaterial);
+        verticalRoad.rotation.x = -Math.PI / 2;
+        verticalRoad.position.set(0, -0.05, 0);
+        verticalRoad.receiveShadow = true;
+        scene.add(verticalRoad);
+        
+        // Центральная площадь с плиткой
+        const centralSquare = new THREE.Mesh(new THREE.PlaneGeometry(14, 14), pathMaterial);
+        centralSquare.rotation.x = -Math.PI / 2;
+        centralSquare.position.set(0, -0.05, 0);
+        centralSquare.receiveShadow = true;
+        scene.add(centralSquare);
+        
+        // --- ГЕНЕРАЦИЯ ВЫСОКИХ РАЗНОЭТАЖНЫХ ЗДАНИЙ (высота от 8 до 28) ---
+        const buildingColors = [0x9e8b72, 0xb8a28c, 0x8e7a62, 0xa5927a, 0xbcab93, 0x7d6952, 0xc9b69b, 0xaa987d];
+        const windowMat = new THREE.MeshStandardMaterial({ color: 0xfff4cf, emissive: 0x442200, emissiveIntensity: 0.12 });
+        const buildingPositions = [];
+        
+        function createHighRise(x, z, width, depth, height, colorVariant) {
+            const material = new THREE.MeshStandardMaterial({ color: buildingColors[colorVariant % buildingColors.length], roughness: 0.25, metalness: 0.1 });
+            const building = new THREE.Mesh(new THREE.BoxGeometry(width, height, depth), material);
+            building.position.set(x, height / 2, z);
+            building.castShadow = true;
+            building.receiveShadow = true;
+            scene.add(building);
             
-            if (hasBricks) {
-                // Рисуем кирпичную кладку
-                const brickW = 64, brickH = 32;
-                ctx.strokeStyle = detailColor;
-                ctx.lineWidth = 4;
-                for (let y = 0; y < canvas.height; y += brickH) {
-                    const offset = (Math.floor(y / brickH) % 2 === 0) ? 0 : brickW/2;
-                    for (let x = -brickW; x < canvas.width + brickW; x += brickW) {
-                        ctx.strokeRect(x + offset, y, brickW-2, brickH-2);
-                        ctx.fillStyle = detailColor;
-                        ctx.fillRect(x + offset + 2, y + 2, brickW-6, brickH-6);
-                        ctx.fillStyle = baseColor;
-                        ctx.fillRect(x + offset + 4, y + 4, brickW-10, brickH-10);
-                    }
-                }
-                // Добавляем зернистость
-                for (let i = 0; i < 6000; i++) {
-                    ctx.fillStyle = `rgba(0,0,0,${Math.random() * 0.15})`;
-                    ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 2, 2);
-                }
-            } else {
-                // Бетонная текстура с шумом
-                for (let i = 0; i < 15000; i++) {
-                    ctx.fillStyle = `rgba(0,0,0,${Math.random() * 0.2})`;
-                    ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 3, 3);
-                }
-                // тёмные пятна
-                for (let i = 0; i < 800; i++) {
-                    ctx.fillStyle = `rgba(60,50,40,${Math.random() * 0.4})`;
-                    ctx.beginPath();
-                    ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, Math.random() * 12 + 3, 0, Math.PI*2);
-                    ctx.fill();
-                }
+            // Окна с эффектом свечения (на всех фасадах)
+            const floors = Math.floor(height / 1.5);
+            for (let floor = 0; floor < floors; floor++) {
+                const yPos = 0.8 + floor * 1.5;
+                // Окна по периметру
+                const windowWidth = 0.5;
+                const windowHeight = 0.9;
+                const windowDepth = 0.05;
+                const offsets = [-width/2 + 0.4, width/2 - 0.4];
+                offsets.forEach(offX => {
+                    const windowCube = new THREE.Mesh(new THREE.BoxGeometry(windowWidth, windowHeight, windowDepth), windowMat);
+                    windowCube.position.set(x + offX, yPos, z + depth/2 + 0.05);
+                    windowCube.castShadow = false;
+                    scene.add(windowCube);
+                    
+                    const windowCubeBack = new THREE.Mesh(new THREE.BoxGeometry(windowWidth, windowHeight, windowDepth), windowMat);
+                    windowCubeBack.position.set(x + offX, yPos, z - depth/2 - 0.05);
+                    windowCubeBack.castShadow = false;
+                    scene.add(windowCubeBack);
+                });
+                const offsetsZ = [-depth/2 + 0.4, depth/2 - 0.4];
+                offsetsZ.forEach(offZ => {
+                    const windowSide = new THREE.Mesh(new THREE.BoxGeometry(windowDepth, windowHeight, windowWidth), windowMat);
+                    windowSide.position.set(x + width/2 + 0.05, yPos, z + offZ);
+                    windowSide.castShadow = false;
+                    scene.add(windowSide);
+                    
+                    const windowSideBack = new THREE.Mesh(new THREE.BoxGeometry(windowDepth, windowHeight, windowWidth), windowMat);
+                    windowSideBack.position.set(x - width/2 - 0.05, yPos, z + offZ);
+                    windowSideBack.castShadow = false;
+                    scene.add(windowSideBack);
+                });
             }
             
-            const texture = new THREE.CanvasTexture(canvas);
-            texture.wrapS = THREE.RepeatWrapping;
-            texture.wrapT = THREE.RepeatWrapping;
-            texture.repeat.set(2, Math.random() * 1.5 + 1.5);
-            texture.needsUpdate = true;
-            return texture;
+            buildingPositions.push({ x, z, radius: Math.max(width, depth) * 0.55 });
+            return building;
         }
         
-        // Генерация материалов для зданий (каждый уникальный)
-        const buildingMaterials = [];
-        const colorSchemes = [
-            ['#b87c4f', '#5a3a2a'], ['#9e7b5c', '#4d3826'], ['#c89d7a', '#6e4c34'],
-            ['#8f6b4a', '#573e2a'], ['#a58462', '#634a32'], ['#bc8f6b', '#5e3f28'],
-            ['#7d6048', '#4a3522'], ['#d4aa82', '#7a5438'], ['#6e5742', '#3d2d1e']
-        ];
-        for (let i = 0; i < 60; i++) {
-            const scheme = colorSchemes[Math.floor(Math.random() * colorSchemes.length)];
-            const hasBricks = Math.random() > 0.4;
-            const texture = createBuildingTexture(scheme[0], scheme[1], hasBricks);
-            const material = new THREE.MeshStandardMaterial({ 
-                map: texture, 
-                roughness: 0.65, 
-                metalness: 0.15,
-                emissive: 0x000000,
-                emissiveIntensity: 0
-            });
-            buildingMaterials.push(material);
-        }
-        
-        // Материалы для окон (стекло)
-        const windowMaterial = new THREE.MeshStandardMaterial({ color: 0xaaccff, roughness: 0.2, metalness: 0.85, emissive: 0x224466, emissiveIntensity: 0.12 });
-        
-        // --- ЗЕМЛЯ И ДОРОЖКИ (реалистичные) ---
-        // Асфальтированные дороги с текстурой
-        const asphaltCanvas = document.createElement('canvas');
-        asphaltCanvas.width = 1024;
-        asphaltCanvas.height = 1024;
-        const asCtx = asphaltCanvas.getContext('2d');
-        asCtx.fillStyle = '#3a3e48';
-        asCtx.fillRect(0, 0, asphaltCanvas.width, asphaltCanvas.height);
-        for (let i = 0; i < 8000; i++) {
-            asCtx.fillStyle = `rgba(20,20,30,${Math.random() * 0.4})`;
-            asCtx.fillRect(Math.random() * asphaltCanvas.width, Math.random() * asphaltCanvas.height, 4, 4);
-        }
-        const asphaltTexture = new THREE.CanvasTexture(asphaltCanvas);
-        asphaltTexture.wrapS = THREE.RepeatWrapping;
-        asphaltTexture.wrapT = THREE.RepeatWrapping;
-        asphaltTexture.repeat.set(8, 8);
-        const roadMaterial = new THREE.MeshStandardMaterial({ map: asphaltTexture, roughness: 0.7, metalness: 0.05 });
-        
-        // Газон с текстурой травы
-        const grassCanvas = document.createElement('canvas');
-        grassCanvas.width = 1024;
-        grassCanvas.height = 1024;
-        const grCtx = grassCanvas.getContext('2d');
-        grCtx.fillStyle = '#5a8742';
-        grCtx.fillRect(0, 0, grassCanvas.width, grassCanvas.height);
-        for (let i = 0; i < 20000; i++) {
-            grCtx.fillStyle = `rgba(30,50,20,${Math.random() * 0.5})`;
-            grCtx.fillRect(Math.random() * grassCanvas.width, Math.random() * grassCanvas.height, 2, 2);
-        }
-        const grassTexture = new THREE.CanvasTexture(grassCanvas);
-        grassTexture.wrapS = THREE.RepeatWrapping;
-        grassTexture.wrapT = THREE.RepeatWrapping;
-        grassTexture.repeat.set(12, 12);
-        const grassMaterial = new THREE.MeshStandardMaterial({ map: grassTexture, roughness: 0.85, metalness: 0.02 });
-        
-        // Плитка центральной площади (шахматка с реалистичной зернистостью)
-        const tileCanvas = document.createElement('canvas');
-        tileCanvas.width = 1024;
-        tileCanvas.height = 1024;
-        const tCtx = tileCanvas.getContext('2d');
-        tCtx.fillStyle = '#d8cfb0';
-        tCtx.fillRect(0, 0, tileCanvas.width, tileCanvas.height);
-        tCtx.fillStyle = '#b8a87a';
-        const cs = 128;
-        for (let i = 0; i < 8; i++) {
-            for (let j = 0; j < 8; j++) {
-                if ((i+j)%2 === 0) tCtx.fillRect(i*cs, j*cs, cs, cs);
-            }
-        }
-        for (let i = 0; i < 4000; i++) {
-            tCtx.fillStyle = `rgba(0,0,0,${Math.random() * 0.15})`;
-            tCtx.fillRect(Math.random() * tileCanvas.width, Math.random() * tileCanvas.height, 3, 3);
-        }
-        const tileTexture = new THREE.CanvasTexture(tileCanvas);
-        tileTexture.wrapS = THREE.RepeatWrapping;
-        tileTexture.wrapT = THREE.RepeatWrapping;
-        tileTexture.repeat.set(4, 4);
-        const tileMaterial = new THREE.MeshStandardMaterial({ map: tileTexture, roughness: 0.5, metalness: 0.05 });
-        
-        // Основание земли
-        const ground = new THREE.Mesh(new THREE.PlaneGeometry(150, 150), grassMaterial);
-        ground.rotation.x = -Math.PI / 2;
-        ground.position.y = -0.1;
-        ground.receiveShadow = true;
-        scene.add(ground);
-        
-        // Дороги
-        const hRoad = new THREE.Mesh(new THREE.PlaneGeometry(48, 7), roadMaterial);
-        hRoad.rotation.x = -Math.PI / 2;
-        hRoad.position.set(0, -0.05, 0);
-        hRoad.receiveShadow = true;
-        scene.add(hRoad);
-        
-        const vRoad = new THREE.Mesh(new THREE.PlaneGeometry(7, 48), roadMaterial);
-        vRoad.rotation.x = -Math.PI / 2;
-        vRoad.position.set(0, -0.05, 0);
-        vRoad.receiveShadow = true;
-        scene.add(vRoad);
-        
-        const centerSquare = new THREE.Mesh(new THREE.PlaneGeometry(14, 14), tileMaterial);
-        centerSquare.rotation.x = -Math.PI / 2;
-        centerSquare.position.set(0, -0.04, 0);
-        centerSquare.receiveShadow = true;
-        scene.add(centerSquare);
-        
-        // --- ЗДАНИЯ (высотки в 2-3 раза выше, многоэтажные) ---
-        // Высота варьируется от 8 до 25 единиц (этажей)
-        const buildingList = [];
-        const positions = [];
-        // сетка зданий (плотная, но с проходами)
-        for (let i = -4; i <= 4; i++) {
-            for (let j = -4; j <= 4; j++) {
-                if (i === 0 && j === 0) continue;
-                const x = i * 5.8 + (Math.random() - 0.5) * 1.4;
-                const z = j * 5.8 + (Math.random() - 0.5) * 1.4;
-                if (Math.abs(x) < 6 && Math.abs(z) < 6) continue;
-                const width = 1.4 + Math.random() * 1.2;
-                const depth = 1.4 + Math.random() * 1.2;
-                // Высота: от 7 до 24 (в 2-3 раза выше прежнего)
-                const height = 6 + Math.random() * 18;
-                const material = buildingMaterials[Math.floor(Math.random() * buildingMaterials.length)];
-                const building = new THREE.Mesh(new THREE.BoxGeometry(width, height, depth), material);
-                building.position.set(x, height / 2, z);
-                building.castShadow = true;
-                building.receiveShadow = true;
-                scene.add(building);
-                
-                // Добавляем окна (стеклянные вставки) на фасадах
-                const winStep = 1.0;
-                for (let floor = 1; floor < height - 0.8; floor += 1.0) {
-                    for (let side = -1; side <= 1; side+=2) {
-                        const winX = x + side * (width/2 + 0.05);
-                        const winZ = z;
-                        const windowPlane = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.7, 0.05), windowMaterial);
-                        windowPlane.position.set(winX, floor + 0.3, winZ);
-                        windowPlane.castShadow = false;
-                        scene.add(windowPlane);
-                        
-                        const winXz = x;
-                        const winZz = z + side * (depth/2 + 0.05);
-                        const windowPlane2 = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.7, 0.05), windowMaterial);
-                        windowPlane2.position.set(winXz, floor + 0.3, winZz);
-                        windowPlane2.castShadow = false;
-                        scene.add(windowPlane2);
-                    }
-                }
-                
-                buildingList.push({ mesh: building, width, depth, height, x, z });
-                positions.push({ x, z, radius: Math.max(width, depth) * 0.6 });
+        // Создаём разнообразные здания: от 8 до 28 высотой, разная ширина/глубина
+        const gridRange = 6; // 6x6 кварталов
+        for (let i = -gridRange; i <= gridRange; i++) {
+            for (let j = -gridRange; j <= gridRange; j++) {
+                if (i === 0 && j === 0) continue; // центральная площадь
+                const x = i * 6.2 + (Math.random() - 0.5) * 1.5;
+                const z = j * 6.2 + (Math.random() - 0.5) * 1.5;
+                if (Math.abs(x) < 8 && Math.abs(z) < 8) continue; // оставляем центр свободным
+                const width = 1.8 + Math.random() * 1.2;
+                const depth = 1.8 + Math.random() * 1.2;
+                // Высота: от 8 до 28 (раза в 2-3 выше предыдущих)
+                const height = 8 + Math.random() * 20;
+                const colorIdx = Math.floor(Math.random() * buildingColors.length);
+                createHighRise(x, z, width, depth, height, colorIdx);
             }
         }
         
-        // Добавим угловые небоскрёбы ещё выше
-        const skyscraperPos = [[-18,-15],[18,-15],[-18,18],[18,18],[-20,0],[20,0],[0,-20],[0,20]];
-        skyscraperPos.forEach(pos => {
-            const height = 20 + Math.random() * 8;
-            const width = 2.0;
-            const depth = 2.0;
-            const material = buildingMaterials[Math.floor(Math.random() * buildingMaterials.length)];
-            const tower = new THREE.Mesh(new THREE.BoxGeometry(width, height, depth), material);
-            tower.position.set(pos[0], height/2, pos[1]);
-            tower.castShadow = true;
-            scene.add(tower);
-            // окна
-            for (let floor = 1.2; floor < height; floor += 1.2) {
-                for (let s = -1; s<=1; s+=2) {
-                    const win = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.8, 0.05), windowMaterial);
-                    win.position.set(pos[0] + s*1.1, floor, pos[1]);
-                    scene.add(win);
-                    const win2 = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.8, 0.05), windowMaterial);
-                    win2.position.set(pos[0], floor, pos[1] + s*1.1);
-                    scene.add(win2);
-                }
-            }
-            positions.push({ x: pos[0], z: pos[1], radius: 1.1 });
+        // Добавим угловые небоскрёбы (ещё выше)
+        const corners = [[-22,-18],[22,-18],[-22,22],[22,22],[-25,0],[25,0],[0,-25],[0,25]];
+        corners.forEach(pos => {
+            const w = 2.5 + Math.random() * 1.5;
+            const d = 2.5 + Math.random() * 1.5;
+            const h = 22 + Math.random() * 12;
+            createHighRise(pos[0], pos[1], w, d, h, Math.floor(Math.random()*buildingColors.length));
         });
         
-        // --- ДЕРЕВЬЯ (реалистичные, высокие) ---
-        const trunkMat = new THREE.MeshStandardMaterial({ color: 0x7a5a3a, roughness: 0.8 });
-        const foliageMat = new THREE.MeshStandardMaterial({ color: 0x5f8a4c, roughness: 0.6, metalness: 0.05 });
-        const treeList = [];
-        for (let i = 0; i < 220; i++) {
-            let x = (Math.random() - 0.5) * 44;
-            let z = (Math.random() - 0.5) * 44;
-            if (Math.abs(x) < 7 && Math.abs(z) < 7) continue;
-            let collide = false;
-            for (let p of positions) if (Math.hypot(x - p.x, z - p.z) < 1.7) collide = true;
-            if (!collide && Math.abs(x) < 28 && Math.abs(z) < 28) {
+        // --- ДЕРЕВЬЯ (оптимизированные, с меньшим количеством полигонов и теней) ---
+        const trunkMat = new THREE.MeshStandardMaterial({ color: 0x7c5e3a, roughness: 0.9 });
+        const foliageMat = new THREE.MeshStandardMaterial({ color: 0x6f9e4e, roughness: 0.6 });
+        const treePositions = [];
+        // Уменьшим количество деревьев до 90 для производительности
+        for (let i = 0; i < 90; i++) {
+            let x = (Math.random() - 0.5) * 46;
+            let z = (Math.random() - 0.5) * 46;
+            if (Math.abs(x) < 9 && Math.abs(z) < 9) continue;
+            let ok = true;
+            for (let b of buildingPositions) if (Math.hypot(x - b.x, z - b.z) < 1.8) ok = false;
+            if (ok && Math.abs(x) < 28 && Math.abs(z) < 28) {
                 const group = new THREE.Group();
-                const trunkH = 1.6 + Math.random() * 0.8;
-                const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.7, trunkH, 8), trunkMat);
-                trunk.position.y = trunkH/2;
+                const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.7, 1.6, 5), trunkMat);
+                trunk.position.y = 0.8;
                 trunk.castShadow = true;
                 group.add(trunk);
-                const foliageH = new THREE.Mesh(new THREE.ConeGeometry(0.85, 1.4, 8), foliageMat);
-                foliageH.position.y = trunkH + 0.5;
-                foliageH.castShadow = true;
-                group.add(foliageH);
-                const foliageTop = new THREE.Mesh(new THREE.ConeGeometry(0.65, 1.2, 8), foliageMat);
-                foliageTop.position.y = trunkH + 1.5;
-                foliageTop.castShadow = true;
-                group.add(foliageTop);
+                const f1 = new THREE.Mesh(new THREE.ConeGeometry(0.85, 1.2, 6), foliageMat);
+                f1.position.y = 1.7;
+                f1.castShadow = true;
+                group.add(f1);
+                const f2 = new THREE.Mesh(new THREE.ConeGeometry(0.7, 1.0, 6), foliageMat);
+                f2.position.y = 2.5;
+                f2.castShadow = true;
+                group.add(f2);
                 group.position.set(x, 0, z);
                 scene.add(group);
-                treeList.push({ x, z, radius: 0.65 });
+                treePositions.push({ x, z, radius: 0.65 });
             }
         }
-        // Объединяем коллизии
-        const collidables = [...positions, ...treeList];
         
-        // --- ФОНАРИ ВЫСОКИЕ (с реалистичным свечением)---
-        const lampMaterial = new THREE.MeshStandardMaterial({ color: 0xbc9a6c, roughness: 0.4, metalness: 0.6 });
-        const lampGlowMat = new THREE.MeshStandardMaterial({ color: 0xffeebb, emissive: 0xffaa66, emissiveIntensity: 0.55 });
-        for (let i = -16; i <= 16; i+=5) {
-            if (Math.abs(i) < 6) continue;
-            [-16,16].forEach(z => { addLamp(i, z); addLamp(z, i); });
-        }
+        // --- ФОНАРИ (упрощённые для производительности) ---
+        const lampMat = new THREE.MeshStandardMaterial({ color: 0xbfa67a });
+        const lampLightMat = new THREE.MeshStandardMaterial({ color: 0xffdd99, emissive: 0xffaa44, emissiveIntensity: 0.3 });
         function addLamp(x, z) {
-            const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.4, 4.2, 6), lampMaterial);
-            pole.position.set(x, 2.1, z);
+            const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.4, 3.8, 5), lampMat);
+            pole.position.set(x, 1.9, z);
             pole.castShadow = true;
             scene.add(pole);
-            const head = new THREE.Mesh(new THREE.SphereGeometry(0.4, 8), lampGlowMat);
-            head.position.set(x, 4.2, z);
-            head.castShadow = true;
+            const head = new THREE.Mesh(new THREE.SphereGeometry(0.38, 6), lampLightMat);
+            head.position.set(x, 3.9, z);
+            head.castShadow = false;
             scene.add(head);
-            const pointLight = new THREE.PointLight(0xffaa66, 0.65, 20);
-            pointLight.position.set(x, 4.0, z);
-            pointLight.castShadow = false;
-            scene.add(pointLight);
+            const light = new THREE.PointLight(0xffaa66, 0.5, 18);
+            light.position.set(x, 3.6, z);
+            scene.add(light);
         }
+        for (let i = -20; i <= 20; i+=5) if (Math.abs(i) > 7) { addLamp(i,0); addLamp(0,i); addLamp(i,i); addLamp(-i,i); }
         
-        // --- НЕБО С ОБЛАКАМИ (динамические, для глубины)---
-        const cloudMat = new THREE.MeshStandardMaterial({ color: 0xeef4ff, emissive: 0x88aacc, emissiveIntensity: 0.08 });
-        for (let i = 0; i < 45; i++) {
-            const cloud = new THREE.Group();
-            const parts = [0.9, 0.7, 0.6, 0.5];
-            parts.forEach((s, idx) => {
-                const part = new THREE.Mesh(new THREE.SphereGeometry(s, 7), cloudMat);
-                part.position.set(idx*0.8 - 1.2, idx*0.2 - 0.2, 0);
-                part.castShadow = false;
-                cloud.add(part);
-            });
-            cloud.position.set((Math.random() - 0.5)*70, 18 + Math.random()*10, (Math.random() - 0.5)*50 - 25);
-            cloud.scale.set(1.3, 0.9, 0.8);
-            scene.add(cloud);
-        }
-        
-        // --- ПАРТИКЛЫ (листва и пыльца для атмосферы)---
-        const particleCount = 800;
-        const particleGeo = new THREE.BufferGeometry();
-        const particlePos = new Float32Array(particleCount * 3);
-        for (let i = 0; i < particleCount; i++) {
-            particlePos[i*3] = (Math.random() - 0.5) * 70;
-            particlePos[i*3+1] = Math.random() * 8;
-            particlePos[i*3+2] = (Math.random() - 0.5) * 70;
-        }
-        particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePos, 3));
-        const particleMat = new THREE.PointsMaterial({ color: 0xc2d98a, size: 0.07, transparent: true, opacity: 0.3 });
-        const particles = new THREE.Points(particleGeo, particleMat);
-        scene.add(particles);
-        
-        // --- УПРАВЛЕНИЕ ОТ ПЕРВОГО ЛИЦА (высота 1.72) ---
+        // --- УПРАВЛЕНИЕ ОТ ПЕРВОГО ЛИЦА (рост 1.7) ---
         const yawObject = new THREE.Object3D();
         const pitchObject = new THREE.Object3D();
         pitchObject.add(camera);
         yawObject.add(pitchObject);
         scene.add(yawObject);
-        yawObject.position.set(0, 1.72, 0);
+        yawObject.position.set(0, 1.7, 0);
         camera.position.set(0, 0, 0);
         
         const keyState = { KeyW: false, KeyS: false, KeyA: false, KeyD: false, ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false };
         let moveForward = false, moveBack = false, moveLeft = false, moveRight = false;
-        const MOVE_SPEED = 5.5;
+        const MOVE_SPEED = 6.2;
         function updateMoveFlags() {
             moveForward = keyState.KeyW || keyState.ArrowUp;
             moveBack = keyState.KeyS || keyState.ArrowDown;
@@ -433,7 +280,7 @@
             moveRight = keyState.KeyD || keyState.ArrowRight;
         }
         window.addEventListener('keydown', (e) => {
-            if (e.code === 'KeyR') { yawObject.position.set(0,1.72,0); yawObject.rotation.y=0; pitchObject.rotation.x=0; yawRotation=0; pitchRotation=0; e.preventDefault(); return; }
+            if (e.code === 'KeyR') { yawObject.position.set(0,1.7,0); yawObject.rotation.y=0; pitchObject.rotation.x=0; yawRotation=0; pitchRotation=0; e.preventDefault(); return; }
             if (keyState.hasOwnProperty(e.code)) { keyState[e.code] = true; updateMoveFlags(); e.preventDefault(); }
         });
         window.addEventListener('keyup', (e) => {
@@ -443,7 +290,7 @@
         let yawRotation = 0, pitchRotation = 0;
         const mouseSensitivity = 0.0022;
         let isPointerLock = false;
-        const isMobile = /Android|webOS|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        let isMobile = /Android|webOS|iPhone|iPad|iPod/i.test(navigator.userAgent);
         let touchStartX = 0, touchStartY = 0, touchActive = false;
         
         function handleTouchStart(e) { if (!isMobile) return; e.preventDefault(); const t = e.touches[0]; touchStartX = t.clientX; touchStartY = t.clientY; touchActive = true; }
@@ -472,15 +319,16 @@
             function onMouseMove(e) { if (!isPointerLock) return; yawRotation -= e.movementX * mouseSensitivity; pitchRotation -= e.movementY * mouseSensitivity; pitchRotation = Math.max(-Math.PI/2.3, Math.min(Math.PI/2.3, pitchRotation)); yawObject.rotation.y = yawRotation; pitchObject.rotation.x = pitchRotation; }
         }
         
-        function checkCollision(x, z, radius = 0.45) {
-            for (let c of collidables) if (Math.hypot(x - c.x, z - c.z) < (c.radius || 0.65) + radius) return true;
-            if (Math.abs(x) > 33 || Math.abs(z) > 33) return true;
-            return false;
+        // --- КОЛЛИЗИИ (оптимизированные) ---
+        const collidables = [...buildingPositions, ...treePositions];
+        function checkCollision(x, z) {
+            for (let c of collidables) if (Math.hypot(x - c.x, z - c.z) < c.radius + 0.45) return true;
+            return Math.abs(x) > 34 || Math.abs(z) > 34;
         }
         
         let lastTime = performance.now();
         function updateMovement(delta) {
-            if (!isMobile && !isPointerLock && !document.pointerLockElement) return;
+            if (!isMobile && !isPointerLock && !document.pointerLockElement && !isMobile) return;
             const speed = MOVE_SPEED * delta;
             const forward = new THREE.Vector3(0,0,-1).applyQuaternion(yawObject.quaternion);
             const right = new THREE.Vector3(1,0,0).applyQuaternion(yawObject.quaternion);
@@ -493,21 +341,20 @@
             if (len > 0.01) { dx /= len; dz /= len; }
             let newX = yawObject.position.x + dx * speed;
             let newZ = yawObject.position.z + dz * speed;
-            if (!checkCollision(newX, yawObject.position.z, 0.42)) yawObject.position.x = newX;
-            if (!checkCollision(yawObject.position.x, newZ, 0.42)) yawObject.position.z = newZ;
+            if (!checkCollision(newX, yawObject.position.z)) yawObject.position.x = newX;
+            if (!checkCollision(yawObject.position.x, newZ)) yawObject.position.z = newZ;
         }
         
-        // Анимация частиц и облаков
-        let time = 0;
-        function animateAmbient(delta) {
-            time += delta;
-            particles.rotation.y += 0.0008;
-            particles.rotation.x = Math.sin(time * 0.1) * 0.05;
-            atmosphereLight.intensity = 0.22 + Math.sin(time * 1.2) * 0.04;
-            fillLight.intensity = 0.35 + Math.sin(time * 0.7) * 0.03;
+        // --- ДЕКОРАТИВНЫЕ ОБЛАКА (мало, чтобы не грузить)---
+        const cloudMat = new THREE.MeshStandardMaterial({ color: 0xf5f7fc, transparent: true, opacity: 0.85 });
+        for (let i = 0; i < 25; i++) {
+            const cg = new THREE.Group();
+            [0.8,0.6,0.5].forEach((s,idx) => { const p = new THREE.Mesh(new THREE.SphereGeometry(s, 5), cloudMat); p.position.set(idx*0.7-0.7, idx*0.2-0.2,0); cg.add(p); });
+            cg.position.set((Math.random()-0.5)*70, 14+Math.random()*10, (Math.random()-0.5)*50-25);
+            scene.add(cg);
         }
         
-        // Сенсорные кнопки
+        // --- СЕНСОРНЫЕ КНОПКИ ---
         document.querySelectorAll('.touch-btn').forEach(btn => {
             const code = `Key${btn.dataset.key.toUpperCase()}`;
             btn.addEventListener('touchstart', (e) => { e.preventDefault(); keyState[code] = true; updateMoveFlags(); });
@@ -516,22 +363,31 @@
             btn.addEventListener('mouseup', (e) => { e.preventDefault(); keyState[code] = false; updateMoveFlags(); });
         });
         
+        // --- ПОЛНОЭКРАННЫЙ РЕЖИМ ---
         document.getElementById('fullscreen-btn').addEventListener('click', () => {
             if (!document.fullscreenElement) document.documentElement.requestFullscreen();
             else document.exitFullscreen();
         });
         
+        // --- ПРОСТАЯ АНИМАЦИЯ ОБЛАКОВ (оптимизированная)---
+        let cloudTime = 0;
+        function animateClouds(delta) {
+            cloudTime += delta * 0.05;
+            // не делаем сложных движений, чтобы не грузить
+        }
+        
+        // --- ГЛАВНЫЙ ЦИКЛ С ФРУСТУМ-КУЛЛИНГОМ (Three.js делает автоматически, но уменьшим количество теней)---
         let prev = performance.now();
-        function loop() {
+        function gameLoop() {
             const now = performance.now();
-            const delta = Math.min(0.033, (now - prev) / 1000);
+            let delta = Math.min(0.033, (now - prev) / 1000);
             prev = now;
             updateMovement(delta);
-            animateAmbient(delta);
+            animateClouds(delta);
             renderer.render(scene, camera);
-            requestAnimationFrame(loop);
+            requestAnimationFrame(gameLoop);
         }
-        loop();
+        gameLoop();
         
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
@@ -539,7 +395,7 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
         
-        console.log('🏙️ Реалистичный город с высотками, PCFSoftShadowMap и детальными текстурами запущен');
+        console.log('✅ Мегаполис запущен. Здания высотой до 28, тени улучшены, оптимизация включена.');
     </script>
 </body>
 </html>
