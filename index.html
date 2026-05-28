@@ -2,373 +2,53 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Мегаполис — чёткие текстуры, порядок, фонари</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elitra OS — сайт не готов</title>
+    <!-- Рукописный шрифт Caveat (живой, натуральный почерк) -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; overflow: hidden; font-family: 'Segoe UI', sans-serif; touch-action: none; }
-        #ui { position: absolute; bottom: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; z-index: 20; pointer-events: none; text-shadow: 1px 1px 2px black; }
-        .controls-hint { background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); padding: 8px 16px; border-radius: 40px; font-size: 14px; color: #eee; font-family: monospace; border-left: 3px solid #ffaa66; }
-        .controls-hint kbd { background: #2c2c2c; border-radius: 6px; padding: 2px 8px; margin: 0 4px; color: #ffcc88; }
-        #crosshair { position: absolute; top: 50%; left: 50%; width: 4px; height: 4px; background: rgba(255,255,255,0.8); border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 0 2px rgba(0,0,0,0.4); z-index: 20; pointer-events: none; }
-        .info { position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.5); padding: 6px 12px; border-radius: 20px; font-size: 12px; color: #ddd; pointer-events: none; }
-        .fullscreen-btn { position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.6); border: none; border-radius: 40px; padding: 8px 16px; color: white; cursor: pointer; z-index: 30; font-weight: bold; }
-        .touch-controls { position: absolute; bottom: 30px; right: 20px; left: 20px; display: none; justify-content: space-between; z-index: 25; pointer-events: none; }
-        .touch-panel { pointer-events: auto; background: rgba(0,0,0,0.5); backdrop-filter: blur(12px); border-radius: 60px; padding: 12px 20px; display: flex; gap: 25px; }
-        .touch-btn { background: rgba(30,30,40,0.85); border: none; color: #ffdd99; font-size: 28px; width: 65px; height: 65px; border-radius: 50%; cursor: pointer; }
-        .touch-btn:active { background: #ffaa33; transform: scale(0.95); }
-        @media (max-width: 768px) { .touch-controls { display: flex; } .touch-btn { width: 55px; height: 55px; font-size: 24px; } .controls-hint { font-size: 10px; } }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000000;  /* чёрный фон */
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Caveat', cursive, 'Pacifico', 'Comic Neue', handwriting;
+        }
+
+        .message {
+            color: #FFD700;       /* яркий жёлтый */
+            font-size: 5rem;      /* очень крупный */
+            font-weight: 700;
+            text-align: center;
+            padding: 1rem;
+            line-height: 1.2;
+            letter-spacing: 0.01em;
+        }
+
+        /* адаптация под экраны поменьше — шрифт остаётся крупным, но чуть уменьшается */
+        @media (max-width: 700px) {
+            .message {
+                font-size: 3.6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .message {
+                font-size: 2.8rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <button class="fullscreen-btn" id="fullscreen-btn">⛶ Полный экран</button>
-    <div id="ui">
-        <div class="controls-hint">🚶‍♂️ Прогулка &nbsp;|&nbsp; <kbd>WASD</kbd> или 🎮 кнопки &nbsp;|&nbsp; 🖱️ Мышь/палец для обзора</div>
-        <div class="info">🏙️ Мегаполис • чёткие текстуры • фонари вдоль дорог</div>
+    <div class="message">
+        Ой, сайт пока не готов!
     </div>
-    <div id="crosshair"></div>
-    <div class="touch-controls" id="touchControls">
-        <div></div>
-        <div class="touch-panel">
-            <button class="touch-btn" data-key="w">▲</button>
-            <button class="touch-btn" data-key="a">◀</button>
-            <button class="touch-btn" data-key="s">▼</button>
-            <button class="touch-btn" data-key="d">▶</button>
-        </div>
-        <div></div>
-    </div>
-
-    <script type="importmap">
-        { "imports": { "three": "https://unpkg.com/three@0.128.0/build/three.module.js" } }
-    </script>
-
-    <script type="module">
-        import * as THREE from 'three';
-
-        // --- СЦЕНА ---
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x6ba5d0);
-        scene.fog = new THREE.FogExp2(0x6ba5d0, 0.006);
-        
-        const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 250);
-        const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        document.body.appendChild(renderer.domElement);
-        
-        // --- ОСВЕЩЕНИЕ ---
-        const ambientLight = new THREE.AmbientLight(0x4a5b6e, 0.5);
-        scene.add(ambientLight);
-        
-        const sunLight = new THREE.DirectionalLight(0xffeedd, 1.3);
-        sunLight.position.set(20, 25, 10);
-        sunLight.castShadow = true;
-        sunLight.shadow.mapSize.width = 2048;
-        sunLight.shadow.mapSize.height = 2048;
-        sunLight.shadow.camera.near = 0.5;
-        sunLight.shadow.camera.far = 70;
-        sunLight.shadow.camera.left = -18;
-        sunLight.shadow.camera.right = 18;
-        sunLight.shadow.camera.top = 18;
-        sunLight.shadow.camera.bottom = -18;
-        scene.add(sunLight);
-        
-        const fillLight = new THREE.PointLight(0xccaa88, 0.3);
-        fillLight.position.set(0, 3, 0);
-        scene.add(fillLight);
-        
-        const backLight = new THREE.PointLight(0xaaccff, 0.25);
-        backLight.position.set(-10, 12, -15);
-        scene.add(backLight);
-        
-        // --- ТЕКСТУРЫ: бесшовные, правильное повторение, без мерцания ---
-        const textureLoader = new THREE.TextureLoader();
-        let grassTexture, tileTexture;
-        
-        function loadTexture(url, fallbackColor, repeatX = 8, repeatY = 8) {
-            const tex = textureLoader.load(url, 
-                (t) => {
-                    t.wrapS = THREE.RepeatWrapping;
-                    t.wrapT = THREE.RepeatWrapping;
-                    t.repeat.set(repeatX, repeatY);
-                    t.anisotropy = 16;
-                    t.needsUpdate = true;
-                },
-                undefined,
-                (err) => { console.warn(`Текстура ${url} не загружена, используется цвет`); }
-            );
-            return tex;
-        }
-        
-        grassTexture = loadTexture('./assets/textures/grass.jpeg', 0x6d9e4e, 10, 10);
-        tileTexture = loadTexture('./assets/textures/white_tiled_path.jpeg', 0xe0d5b6, 6, 6);
-        
-        const grassMaterial = new THREE.MeshStandardMaterial({ map: grassTexture, roughness: 0.75, metalness: 0.05, color: 0x6d9e4e });
-        const pathMaterial = new THREE.MeshStandardMaterial({ map: tileTexture, roughness: 0.45, metalness: 0.08, color: 0xe0d5b6 });
-        
-        // --- ЗЕМЛЯ (только один слой, без перекрытий) ---
-        const groundPlane = new THREE.Mesh(new THREE.PlaneGeometry(140, 140), grassMaterial);
-        groundPlane.rotation.x = -Math.PI / 2;
-        groundPlane.position.y = -0.1;
-        groundPlane.receiveShadow = true;
-        scene.add(groundPlane);
-        
-        // Дорожки: только одна плоскость на дорогу, без наложения друг на друга
-        // Горизонтальная дорога (вдоль X)
-        const horizontalRoad = new THREE.Mesh(new THREE.PlaneGeometry(52, 7), pathMaterial);
-        horizontalRoad.rotation.x = -Math.PI / 2;
-        horizontalRoad.position.set(0, -0.08, 0);
-        horizontalRoad.receiveShadow = true;
-        scene.add(horizontalRoad);
-        
-        // Вертикальная дорога (вдоль Z)
-        const verticalRoad = new THREE.Mesh(new THREE.PlaneGeometry(7, 52), pathMaterial);
-        verticalRoad.rotation.x = -Math.PI / 2;
-        verticalRoad.position.set(0, -0.08, 0);
-        verticalRoad.receiveShadow = true;
-        scene.add(verticalRoad);
-        
-        // Центральная площадь (не перекрывает дороги, а вписывается между ними)
-        const centralSquare = new THREE.Mesh(new THREE.PlaneGeometry(14, 14), pathMaterial);
-        centralSquare.rotation.x = -Math.PI / 2;
-        centralSquare.position.set(0, -0.08, 0);
-        centralSquare.receiveShadow = true;
-        scene.add(centralSquare);
-        
-        // --- ЗДАНИЯ (высотные, разнообразные) ---
-        const buildingColors = [0x9e8b72, 0xb8a28c, 0x8e7a62, 0xa5927a, 0xbcab93, 0x7d6952, 0xc9b69b, 0xaa987d];
-        const windowMat = new THREE.MeshStandardMaterial({ color: 0xfff4cf, emissive: 0x442200, emissiveIntensity: 0.1 });
-        const buildingPositions = [];
-        
-        function createHighRise(x, z, width, depth, height, colorVariant) {
-            const material = new THREE.MeshStandardMaterial({ color: buildingColors[colorVariant % buildingColors.length], roughness: 0.25, metalness: 0.1 });
-            const building = new THREE.Mesh(new THREE.BoxGeometry(width, height, depth), material);
-            building.position.set(x, height / 2, z);
-            building.castShadow = true;
-            building.receiveShadow = true;
-            scene.add(building);
-            
-            // Окна (упрощённо, чтобы не перегружать)
-            const floors = Math.floor(height / 1.6);
-            for (let floor = 0; floor < floors; floor++) {
-                const yPos = 0.9 + floor * 1.6;
-                const offsetsX = [-width/2 + 0.5, width/2 - 0.5];
-                offsetsX.forEach(offX => {
-                    const win = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.9, 0.05), windowMat);
-                    win.position.set(x + offX, yPos, z + depth/2 + 0.05);
-                    win.castShadow = false;
-                    scene.add(win);
-                    const winBack = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.9, 0.05), windowMat);
-                    winBack.position.set(x + offX, yPos, z - depth/2 - 0.05);
-                    winBack.castShadow = false;
-                    scene.add(winBack);
-                });
-                const offsetsZ = [-depth/2 + 0.5, depth/2 - 0.5];
-                offsetsZ.forEach(offZ => {
-                    const winSide = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.9, 0.55), windowMat);
-                    winSide.position.set(x + width/2 + 0.05, yPos, z + offZ);
-                    winSide.castShadow = false;
-                    scene.add(winSide);
-                    const winSideBack = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.9, 0.55), windowMat);
-                    winSideBack.position.set(x - width/2 - 0.05, yPos, z + offZ);
-                    winSideBack.castShadow = false;
-                    scene.add(winSideBack);
-                });
-            }
-            buildingPositions.push({ x, z, radius: Math.max(width, depth) * 0.55 });
-        }
-        
-        // Генерация зданий сеткой 6x6 с высокой вариативностью
-        for (let i = -6; i <= 6; i++) {
-            for (let j = -6; j <= 6; j++) {
-                if (i === 0 && j === 0) continue;
-                const x = i * 6.0 + (Math.random() - 0.5) * 1.2;
-                const z = j * 6.0 + (Math.random() - 0.5) * 1.2;
-                if (Math.abs(x) < 8 && Math.abs(z) < 8) continue;
-                const width = 1.8 + Math.random() * 1.4;
-                const depth = 1.8 + Math.random() * 1.4;
-                const height = 7 + Math.random() * 22; // от 7 до 29 этажей
-                const colorIdx = Math.floor(Math.random() * buildingColors.length);
-                createHighRise(x, z, width, depth, height, colorIdx);
-            }
-        }
-        
-        // Угловые небоскрёбы
-        const corners = [[-24,-20],[24,-20],[-24,24],[24,24],[-28,0],[28,0],[0,-28],[0,28]];
-        corners.forEach(pos => {
-            const w = 2.4 + Math.random() * 1.6;
-            const d = 2.4 + Math.random() * 1.6;
-            const h = 20 + Math.random() * 15;
-            createHighRise(pos[0], pos[1], w, d, h, Math.floor(Math.random()*buildingColors.length));
-        });
-        
-        // --- ФОНАРИ (вдоль дорог, ровными рядами) ---
-        const lampMat = new THREE.MeshStandardMaterial({ color: 0xbfa67a, metalness: 0.6, roughness: 0.4 });
-        const lampLightMat = new THREE.MeshStandardMaterial({ color: 0xffdd99, emissive: 0xffaa44, emissiveIntensity: 0.35 });
-        
-        function addLamp(x, z) {
-            const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.4, 4.0, 5), lampMat);
-            pole.position.set(x, 2.0, z);
-            pole.castShadow = true;
-            scene.add(pole);
-            const head = new THREE.Mesh(new THREE.SphereGeometry(0.4, 8), lampLightMat);
-            head.position.set(x, 4.1, z);
-            head.castShadow = false;
-            scene.add(head);
-            const light = new THREE.PointLight(0xffaa66, 0.55, 18);
-            light.position.set(x, 3.8, z);
-            scene.add(light);
-        }
-        
-        // Расставляем фонари строго вдоль горизонтальной и вертикальной дорог
-        // Горизонтальная дорога: от -25 до 25 с шагом 4.5
-        for (let x = -24; x <= 24; x += 4.5) {
-            if (Math.abs(x) < 5) continue; // не ставить на центральной площади
-            addLamp(x, 0);
-        }
-        // Вертикальная дорога: от -25 до 25 с шагом 4.5
-        for (let z = -24; z <= 24; z += 4.5) {
-            if (Math.abs(z) < 5) continue;
-            addLamp(0, z);
-        }
-        // Дополнительные фонари на пересечениях и по диагонали (для освещения углов)
-        const extraPositions = [
-            [-12, -12], [12, -12], [-12, 12], [12, 12],
-            [-18, -18], [18, -18], [-18, 18], [18, 18],
-            [-24, -12], [24, -12], [-24, 12], [24, 12],
-            [-12, -24], [12, -24], [-12, 24], [12, 24]
-        ];
-        extraPositions.forEach(pos => {
-            addLamp(pos[0], pos[1]);
-        });
-        
-        // --- УПРАВЛЕНИЕ (камера от первого лица) ---
-        const yawObject = new THREE.Object3D();
-        const pitchObject = new THREE.Object3D();
-        pitchObject.add(camera);
-        yawObject.add(pitchObject);
-        scene.add(yawObject);
-        yawObject.position.set(0, 1.7, 0);
-        camera.position.set(0, 0, 0);
-        
-        const keyState = { KeyW: false, KeyS: false, KeyA: false, KeyD: false, ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false };
-        let moveForward = false, moveBack = false, moveLeft = false, moveRight = false;
-        const MOVE_SPEED = 6.2;
-        function updateMoveFlags() {
-            moveForward = keyState.KeyW || keyState.ArrowUp;
-            moveBack = keyState.KeyS || keyState.ArrowDown;
-            moveLeft = keyState.KeyA || keyState.ArrowLeft;
-            moveRight = keyState.KeyD || keyState.ArrowRight;
-        }
-        window.addEventListener('keydown', (e) => {
-            if (e.code === 'KeyR') { yawObject.position.set(0,1.7,0); yawObject.rotation.y=0; pitchObject.rotation.x=0; yawRotation=0; pitchRotation=0; e.preventDefault(); return; }
-            if (keyState.hasOwnProperty(e.code)) { keyState[e.code] = true; updateMoveFlags(); e.preventDefault(); }
-        });
-        window.addEventListener('keyup', (e) => {
-            if (keyState.hasOwnProperty(e.code)) { keyState[e.code] = false; updateMoveFlags(); e.preventDefault(); }
-        });
-        
-        let yawRotation = 0, pitchRotation = 0;
-        const mouseSensitivity = 0.0022;
-        let isPointerLock = false;
-        let isMobile = /Android|webOS|iPhone|iPad|iPod/i.test(navigator.userAgent);
-        let touchStartX = 0, touchStartY = 0, touchActive = false;
-        
-        function handleTouchStart(e) { if (!isMobile) return; e.preventDefault(); const t = e.touches[0]; touchStartX = t.clientX; touchStartY = t.clientY; touchActive = true; }
-        function handleTouchMove(e) { if (!isMobile || !touchActive) return; e.preventDefault(); const t = e.touches[0]; const dx = t.clientX - touchStartX, dy = t.clientY - touchStartY; if (Math.abs(dx) > 2 || Math.abs(dy) > 2) { yawRotation -= dx * mouseSensitivity; pitchRotation -= dy * mouseSensitivity; pitchRotation = Math.max(-Math.PI/2.3, Math.min(Math.PI/2.3, pitchRotation)); yawObject.rotation.y = yawRotation; pitchObject.rotation.x = pitchRotation; touchStartX = t.clientX; touchStartY = t.clientY; } }
-        function handleTouchEnd(e) { touchActive = false; }
-        
-        if (isMobile) {
-            renderer.domElement.style.touchAction = 'none';
-            renderer.domElement.addEventListener('touchstart', handleTouchStart, { passive: false });
-            renderer.domElement.addEventListener('touchmove', handleTouchMove, { passive: false });
-            renderer.domElement.addEventListener('touchend', handleTouchEnd);
-        } else {
-            const canvas = renderer.domElement;
-            canvas.addEventListener('click', () => canvas.requestPointerLock());
-            document.addEventListener('pointerlockchange', () => {
-                if (document.pointerLockElement === canvas) {
-                    isPointerLock = true;
-                    document.addEventListener('mousemove', onMouseMove);
-                    document.body.style.cursor = 'none';
-                } else {
-                    isPointerLock = false;
-                    document.removeEventListener('mousemove', onMouseMove);
-                    document.body.style.cursor = 'auto';
-                }
-            });
-            function onMouseMove(e) { if (!isPointerLock) return; yawRotation -= e.movementX * mouseSensitivity; pitchRotation -= e.movementY * mouseSensitivity; pitchRotation = Math.max(-Math.PI/2.3, Math.min(Math.PI/2.3, pitchRotation)); yawObject.rotation.y = yawRotation; pitchObject.rotation.x = pitchRotation; }
-        }
-        
-        // --- КОЛЛИЗИИ (только здания, без деревьев) ---
-        const collidables = buildingPositions;
-        function checkCollision(x, z) {
-            for (let c of collidables) if (Math.hypot(x - c.x, z - c.z) < c.radius + 0.45) return true;
-            return Math.abs(x) > 36 || Math.abs(z) > 36;
-        }
-        
-        let lastTime = performance.now();
-        function updateMovement(delta) {
-            if (!isMobile && !isPointerLock && !document.pointerLockElement && !isMobile) return;
-            const speed = MOVE_SPEED * delta;
-            const forward = new THREE.Vector3(0,0,-1).applyQuaternion(yawObject.quaternion);
-            const right = new THREE.Vector3(1,0,0).applyQuaternion(yawObject.quaternion);
-            let dx = 0, dz = 0;
-            if (moveForward) { dx += forward.x; dz += forward.z; }
-            if (moveBack) { dx -= forward.x; dz -= forward.z; }
-            if (moveLeft) { dx -= right.x; dz -= right.z; }
-            if (moveRight) { dx += right.x; dz += right.z; }
-            const len = Math.hypot(dx, dz);
-            if (len > 0.01) { dx /= len; dz /= len; }
-            let newX = yawObject.position.x + dx * speed;
-            let newZ = yawObject.position.z + dz * speed;
-            if (!checkCollision(newX, yawObject.position.z)) yawObject.position.x = newX;
-            if (!checkCollision(yawObject.position.x, newZ)) yawObject.position.z = newZ;
-        }
-        
-        // --- ОБЛАКА (декор) ---
-        const cloudMat = new THREE.MeshStandardMaterial({ color: 0xf5f7fc, transparent: true, opacity: 0.8 });
-        for (let i = 0; i < 25; i++) {
-            const cg = new THREE.Group();
-            [0.9,0.7,0.6].forEach((s,idx) => { const p = new THREE.Mesh(new THREE.SphereGeometry(s, 5), cloudMat); p.position.set(idx*0.8-0.8, idx*0.2-0.2,0); cg.add(p); });
-            cg.position.set((Math.random()-0.5)*70, 15+Math.random()*10, (Math.random()-0.5)*60-30);
-            scene.add(cg);
-        }
-        
-        // --- СЕНСОРНЫЕ КНОПКИ ---
-        document.querySelectorAll('.touch-btn').forEach(btn => {
-            const code = `Key${btn.dataset.key.toUpperCase()}`;
-            btn.addEventListener('touchstart', (e) => { e.preventDefault(); keyState[code] = true; updateMoveFlags(); });
-            btn.addEventListener('touchend', (e) => { e.preventDefault(); keyState[code] = false; updateMoveFlags(); });
-            btn.addEventListener('mousedown', (e) => { e.preventDefault(); keyState[code] = true; updateMoveFlags(); });
-            btn.addEventListener('mouseup', (e) => { e.preventDefault(); keyState[code] = false; updateMoveFlags(); });
-        });
-        
-        // --- ПОЛНОЭКРАННЫЙ РЕЖИМ ---
-        document.getElementById('fullscreen-btn').addEventListener('click', () => {
-            if (!document.fullscreenElement) document.documentElement.requestFullscreen();
-            else document.exitFullscreen();
-        });
-        
-        // --- ЦИКЛ ---
-        let prev = performance.now();
-        function gameLoop() {
-            const now = performance.now();
-            let delta = Math.min(0.033, (now - prev) / 1000);
-            prev = now;
-            updateMovement(delta);
-            renderer.render(scene, camera);
-            requestAnimationFrame(gameLoop);
-        }
-        gameLoop();
-        
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-        
-        console.log('✅ Город с чёткими текстурами и фонарями запущен. Деревья удалены, мерцания нет.');
-    </script>
 </body>
 </html>
