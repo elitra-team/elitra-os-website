@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/jpeg" href="/elitra-os-website/assets/images/logo.jpeg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <meta name="description" content="Elitra OS Team — создаём инструменты для разработчиков: язык программирования, CSS-препроцессор, оконный менеджер и Android-приложения." />
+    <title>Elitra OS Team</title>
+    <style>
+      #preloader {
+        position: fixed; inset: 0; z-index: 99999;
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+        gap: 16px;
+        background: #08080c;
+        color: #e8e8ed;
+        font-family: 'Space Grotesk', system-ui, sans-serif;
+        transition: opacity 0.3s ease;
+      }
+      #preloader.hidden { opacity: 0; pointer-events: none; }
+      #preloader img { border-radius: 8px; }
+      #preloader span { font-weight: 600; font-size: 1.2rem; }
+      #preloader span em { color: #FFD700; font-style: normal; }
+    </style>
+    <script type="module" crossorigin src="/elitra-os-website/assets/index-BD9Q9CqT.js"></script>
+    <link rel="stylesheet" crossorigin href="/elitra-os-website/assets/index-D1DZy42O.css">
+  </head>
+  <body>
+    <div id="preloader">
+      <img src="/elitra-os-website/assets/images/logo.jpeg" alt="" width="40" height="40" />
+      <span>Elitra <em>OS</em></span>
+    </div>
+    <div id="root"></div>
+  </body>
+</html>
